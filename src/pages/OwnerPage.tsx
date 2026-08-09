@@ -239,11 +239,12 @@ function OwnerPage() {
                         Idee
                     </button>
 
-                    <button>
-                        <Settings
-                            size={19}
-                        />
-
+                    <button
+                        onClick={() =>
+                            navigate("/owner/impostazioni")
+                        }
+                    >
+                        <Settings size={19} />
                         Impostazioni
                     </button>
                 </nav>

@@ -1,7 +1,4 @@
-import {
-  Route,
-  Routes,
-} from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
 import ScrollToTop from "./components/ScrollToTop";
@@ -22,11 +19,11 @@ import OwnerBookingsPage from "./pages/OwnerBookingsPage";
 import OwnerCourtBlockPage from "./pages/OwnerCourtBlockPage";
 import OwnerIdeasPage from "./pages/OwnerIdeasPage";
 import OwnerPhotosPage from "./pages/OwnerPhotosPage";
+import OwnerSettingsPage from "./pages/OwnerSettingsPage";
 
 function PublicLayout() {
   return (
     <>
-      <ScrollToTop />
       <Navbar />
 
       <Routes>
@@ -66,62 +63,71 @@ function PublicLayout() {
 
 function App() {
   return (
-    <Routes>
-      <Route
-        path="/owner/login"
-        element={<OwnerLoginPage />}
-      />
+    <>
+      <ScrollToTop />
 
-      <Route
-        path="/owner"
-        element={<OwnerPage />}
-      />
+      <Routes>
+        <Route
+          path="/owner/login"
+          element={<OwnerLoginPage />}
+        />
 
-      <Route
-        path="/owner/eventi"
-        element={<OwnerEventsPage />}
-      />
+        <Route
+          path="/owner"
+          element={<OwnerPage />}
+        />
 
-      <Route
-        path="/owner/eventi/nuovo"
-        element={<OwnerEventFormPage />}
-      />
+        <Route
+          path="/owner/eventi"
+          element={<OwnerEventsPage />}
+        />
 
-      <Route
-        path="/owner/eventi/:id"
-        element={<OwnerEventFormPage />}
-      />
+        <Route
+          path="/owner/eventi/nuovo"
+          element={<OwnerEventFormPage />}
+        />
 
-      <Route
-        path="/owner/eventi/:id/foto"
-        element={<OwnerEventPhotosPage />}
-      />
+        <Route
+          path="/owner/eventi/:id"
+          element={<OwnerEventFormPage />}
+        />
 
-      <Route
-        path="/owner/prenotazioni"
-        element={<OwnerBookingsPage />}
-      />
+        <Route
+          path="/owner/eventi/:id/foto"
+          element={<OwnerEventPhotosPage />}
+        />
 
-      <Route
-        path="/owner/prenotazioni/blocca"
-        element={<OwnerCourtBlockPage />}
-      />
+        <Route
+          path="/owner/prenotazioni"
+          element={<OwnerBookingsPage />}
+        />
 
-      <Route
-        path="/owner/idee"
-        element={<OwnerIdeasPage />}
-      />
+        <Route
+          path="/owner/prenotazioni/blocca"
+          element={<OwnerCourtBlockPage />}
+        />
 
-      <Route
-        path="/owner/foto"
-        element={<OwnerPhotosPage />}
-      />
+        <Route
+          path="/owner/idee"
+          element={<OwnerIdeasPage />}
+        />
 
-      <Route
-        path="/*"
-        element={<PublicLayout />}
-      />
-    </Routes>
+        <Route
+          path="/owner/foto"
+          element={<OwnerPhotosPage />}
+        />
+
+        <Route
+          path="/owner/impostazioni"
+          element={<OwnerSettingsPage />}
+        />
+
+        <Route
+          path="/*"
+          element={<PublicLayout />}
+        />
+      </Routes>
+    </>
   );
 }
 
