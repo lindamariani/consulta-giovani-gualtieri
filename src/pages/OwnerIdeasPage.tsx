@@ -1,7 +1,6 @@
 import {
   ArrowLeft,
   Check,
-  Eye,
   EyeOff,
   Lightbulb,
   Mail,
