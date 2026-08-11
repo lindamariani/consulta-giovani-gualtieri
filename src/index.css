@@ -11877,3 +11877,21 @@ body,
   background: #ffad72;
   border-top: 1px solid black;
 }
+
+.past-events-section .events-list-grid {
+  column-gap: 14px;
+  row-gap: 14px;
+}
+
+/* EVENTI PASSATI — card separate con bordo completo */
+
+.past-events-section .events-list-grid {
+  gap: 14px;
+
+  border-top: none;
+  border-left: none;
+}
+
+.past-events-section .event-list-card {
+  border: 1px solid black;
+}
