@@ -18,14 +18,12 @@ import {
 
 import { supabase } from "../lib/supabase";
 
-import type { EventRecord } from "../types/event";
+import EventGalleryMedia from "../components/EventGalleryMedia";
 
-type EventPhoto = {
-    id: string;
-    image_url: string;
-    caption: string | null;
-    sort_order: number;
-};
+import type {
+    EventMediaRecord,
+    EventRecord,
+} from "../types/event";
 
 function formatEventDate(
     date: string
@@ -62,8 +60,8 @@ function getLocalDateString() {
 }
 
 function EventPage() {
-    const [photos, setPhotos] =
-        useState<EventPhoto[]>([]);
+    const [media, setMedia] =
+        useState<EventMediaRecord[]>([]);
 
     const { id } =
         useParams();
@@ -118,14 +116,14 @@ function EventPage() {
                 data as EventRecord
             );
 
-            // QUI va il codice delle foto
+            // Carica foto e video della gallery
             const {
-                data: photoData,
-                error: photoError,
+                data: mediaData,
+                error: mediaError,
             } = await supabase
                 .from("event_photos")
                 .select(
-                    "id, image_url, caption, sort_order"
+                    "id, event_id, image_url, storage_path, caption, sort_order, created_at, media_type, width, height, aspect_ratio, orientation"
                 )
                 .eq(
                     "event_id",
@@ -138,14 +136,14 @@ function EventPage() {
                     }
                 );
 
-            if (photoError) {
+            if (mediaError) {
                 console.error(
-                    photoError
+                    mediaError
                 );
             }
 
-            setPhotos(
-                (photoData ?? []) as EventPhoto[]
+            setMedia(
+                (mediaData ?? []) as EventMediaRecord[]
             );
 
             setLoading(false);
@@ -451,39 +449,27 @@ function EventPage() {
                             </h2>
                         </div>
 
-                        {photos.length > 0 ? (
-                            <div className="event-gallery-grid event-gallery-real-grid">
-                                {photos.map(
+                        {media.length > 0 ? (
+                            <div className="event-media-grid">
+                                {media.map(
                                     (
-                                        photo,
+                                        item,
                                         index
                                     ) => (
-                                        <div
+                                        <EventGalleryMedia
                                             key={
-                                                photo.id
+                                                item.id
                                             }
-                                            className={`event-gallery-real-photo ${index === 0
-                                                    ? "event-gallery-real-photo-featured"
-                                                    : ""
-                                                }`}
-                                        >
-                                            <img
-                                                src={
-                                                    photo.image_url
-                                                }
-                                                alt={`${event.title} ${index + 1
-                                                    }`}
-                                            />
-
-                                            <span>
-                                                {String(
-                                                    index + 1
-                                                ).padStart(
-                                                    2,
-                                                    "0"
-                                                )}
-                                            </span>
-                                        </div>
+                                            media={
+                                                item
+                                            }
+                                            index={
+                                                index
+                                            }
+                                            eventTitle={
+                                                event.title
+                                            }
+                                        />
                                     )
                                 )}
                             </div>
@@ -492,12 +478,12 @@ function EventPage() {
                                 <span>✦</span>
 
                                 <h3>
-                                    FOTO IN ARRIVO.
+                                    MEDIA IN ARRIVO.
                                 </h3>
 
                                 <p>
                                     Quando la Consulta
-                                    caricherà le foto
+                                    caricherà foto e video
                                     dell'evento,
                                     compariranno qui.
                                 </p>

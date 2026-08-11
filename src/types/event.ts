@@ -62,3 +62,41 @@ export type EventRecord = {
 
   updated_at: string;
 };
+
+export type EventMediaType =
+  | "image"
+  | "video";
+
+export type EventMediaOrientation =
+  | "vertical"
+  | "square"
+  | "horizontal";
+
+export type EventMediaRecord = {
+  id: string;
+  event_id: string;
+  image_url: string;
+  storage_path:
+    | string
+    | null;
+  caption:
+    | string
+    | null;
+  sort_order: number;
+  created_at: string;
+  media_type:
+    EventMediaType;
+  width:
+    | number
+    | null;
+  height:
+    | number
+    | null;
+  aspect_ratio:
+    | number
+    | null;
+  orientation:
+    | EventMediaOrientation
+    | null;
+};
+

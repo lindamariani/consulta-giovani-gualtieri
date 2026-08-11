@@ -1,5 +1,6 @@
 import {
   ArrowLeft,
+  Film,
   Image,
   Images,
 } from "lucide-react";
@@ -16,12 +17,13 @@ import {
 
 import { supabase } from "../lib/supabase";
 
-type EventPhotoSummary = {
+type EventMediaSummary = {
   id: string;
   title: string;
   event_date: string;
   cover_url: string | null;
-  photoCount: number;
+  mediaCount: number;
+  videoCount: number;
 };
 
 function formatDate(
@@ -47,7 +49,9 @@ function OwnerPhotosPage() {
     events,
     setEvents,
   ] =
-    useState<EventPhotoSummary[]>([]);
+    useState<
+      EventMediaSummary[]
+    >([]);
 
   const [
     loading,
@@ -62,7 +66,7 @@ function OwnerPhotosPage() {
     useState("");
 
   useEffect(() => {
-    const loadPhotosHub =
+    const loadMediaHub =
       async () => {
         setLoading(true);
         setError("");
@@ -83,13 +87,18 @@ function OwnerPhotosPage() {
         }
 
         const {
-          data: profile,
+          data:
+            profile,
           error:
             profileError,
         } =
           await supabase
-            .from("profiles")
-            .select("role")
+            .from(
+              "profiles"
+            )
+            .select(
+              "role"
+            )
             .eq(
               "id",
               user.id
@@ -117,7 +126,9 @@ function OwnerPhotosPage() {
             eventError,
         } =
           await supabase
-            .from("events")
+            .from(
+              "events"
+            )
             .select(
               "id, title, event_date, cover_url"
             )
@@ -129,9 +140,7 @@ function OwnerPhotosPage() {
               }
             );
 
-        if (
-          eventError
-        ) {
+        if (eventError) {
           console.error(
             eventError
           );
@@ -149,27 +158,25 @@ function OwnerPhotosPage() {
 
         const {
           data:
-            photoData,
+            mediaData,
           error:
-            photoError,
+            mediaError,
         } =
           await supabase
             .from(
               "event_photos"
             )
             .select(
-              "event_id"
+              "event_id, media_type"
             );
 
-        if (
-          photoError
-        ) {
+        if (mediaError) {
           console.error(
-            photoError
+            mediaError
           );
 
           setError(
-            "Non riesco a caricare le foto."
+            "Non riesco a caricare i media."
           );
 
           setLoading(
@@ -179,25 +186,40 @@ function OwnerPhotosPage() {
           return;
         }
 
-        const counts =
+        const mediaCounts =
+          new Map<
+            string,
+            number
+          >();
+
+        const videoCounts =
           new Map<
             string,
             number
           >();
 
         for (
-          const photo of
-          photoData ?? []
+          const item of
+          mediaData ?? []
         ) {
-          const current =
-            counts.get(
-              photo.event_id
-            ) ?? 0;
-
-          counts.set(
-            photo.event_id,
-            current + 1
+          mediaCounts.set(
+            item.event_id,
+            (mediaCounts.get(
+              item.event_id
+            ) ?? 0) + 1
           );
+
+          if (
+            item.media_type ===
+            "video"
+          ) {
+            videoCounts.set(
+              item.event_id,
+              (videoCounts.get(
+                item.event_id
+              ) ?? 0) + 1
+            );
+          }
         }
 
         const rows =
@@ -207,15 +229,20 @@ function OwnerPhotosPage() {
             (event) => ({
               ...event,
 
-              photoCount:
-                counts.get(
+              mediaCount:
+                mediaCounts.get(
+                  event.id
+                ) ?? 0,
+
+              videoCount:
+                videoCounts.get(
                   event.id
                 ) ?? 0,
             })
           );
 
         setEvents(
-          rows as EventPhotoSummary[]
+          rows as EventMediaSummary[]
         );
 
         setLoading(
@@ -223,21 +250,42 @@ function OwnerPhotosPage() {
         );
       };
 
-    loadPhotosHub();
+    loadMediaHub();
   }, [navigate]);
 
   if (loading) {
     return (
       <main className="owner-loading">
-        CARICAMENTO FOTO...
+        CARICAMENTO MEDIA...
       </main>
     );
   }
 
+  const totalMedia =
+    events.reduce(
+      (
+        total,
+        event
+      ) =>
+        total +
+        event.mediaCount,
+      0
+    );
+
+  const totalVideos =
+    events.reduce(
+      (
+        total,
+        event
+      ) =>
+        total +
+        event.videoCount,
+      0
+    );
+
   return (
     <main className="owner-photos-page">
       <div className="container owner-photos-container">
-
         <div className="owner-events-topbar">
           <Link
             to="/owner"
@@ -251,7 +299,7 @@ function OwnerPhotosPage() {
           </Link>
 
           <span>
-            CONSULTA / FOTO
+            CONSULTA / MEDIA
           </span>
         </div>
 
@@ -262,13 +310,13 @@ function OwnerPhotosPage() {
             </span>
 
             <h1>
-              FOTO.
+              MEDIA.
             </h1>
 
             <p>
-              Gestisci le gallery
-              degli eventi della
-              Consulta.
+              Gestisci foto e video
+              delle gallery degli
+              eventi della Consulta.
             </p>
           </div>
 
@@ -278,21 +326,12 @@ function OwnerPhotosPage() {
             />
 
             <strong>
-              {
-                events.reduce(
-                  (
-                    total,
-                    event
-                  ) =>
-                    total +
-                    event.photoCount,
-                  0
-                )
-              }
+              {totalMedia}
             </strong>
 
             <span>
-              FOTO TOTALI
+              MEDIA TOTALI ·{" "}
+              {totalVideos} VIDEO
             </span>
           </div>
         </div>
@@ -317,7 +356,7 @@ function OwnerPhotosPage() {
             <span>
               Crea prima un
               evento per poter
-              caricare le foto.
+              caricare foto e video.
             </span>
           </div>
         ) : (
@@ -342,7 +381,7 @@ function OwnerPhotosPage() {
                       />
                     ) : (
                       <div className="owner-photo-event-placeholder">
-                        <Image
+                        <Film
                           size={42}
                         />
                       </div>
@@ -367,26 +406,26 @@ function OwnerPhotosPage() {
                     <div className="owner-photo-event-bottom">
                       <strong>
                         {
-                          event.photoCount
+                          event.mediaCount
                         }{" "}
-                        {event.photoCount ===
-                        1
-                          ? "FOTO"
-                          : "FOTO"}
+                        MEDIA
+                        {event.videoCount >
+                          0 &&
+                          ` · ${event.videoCount} VIDEO`}
                       </strong>
 
                       <button
                         type="button"
                         onClick={() =>
                           navigate(
-                            `/owner/eventi/${event.id}/foto`
+                            `/owner/eventi/${event.id}/media`
                           )
                         }
                       >
-                        {event.photoCount ===
+                        {event.mediaCount ===
                         0
-                          ? "CARICA FOTO"
-                          : "GESTISCI FOTO"}
+                          ? "CARICA MEDIA"
+                          : "GESTISCI MEDIA"}
                       </button>
                     </div>
                   </div>

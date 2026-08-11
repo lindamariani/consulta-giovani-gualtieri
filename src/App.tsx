@@ -93,6 +93,11 @@ function App() {
         />
 
         <Route
+          path="/owner/eventi/:id/media"
+          element={<OwnerEventPhotosPage />}
+        />
+
+        <Route
           path="/owner/eventi/:id/foto"
           element={<OwnerEventPhotosPage />}
         />
@@ -110,6 +115,11 @@ function App() {
         <Route
           path="/owner/idee"
           element={<OwnerIdeasPage />}
+        />
+
+        <Route
+          path="/owner/media"
+          element={<OwnerPhotosPage />}
         />
 
         <Route

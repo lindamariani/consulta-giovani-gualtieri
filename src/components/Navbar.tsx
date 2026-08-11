@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { Link } from "react-router-dom";
 
-import logoConsulta from "../assets/logo-consulta.png";
+import logoConsulta from "../assets/cGc_nero_26.svg";
 
 function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -25,10 +25,6 @@ function Navbar() {
             className="navbar-logo-image"
           />
 
-          <div className="navbar-logo-text">
-            <strong>Consulta Giovani</strong>
-            <span>Gualtieri</span>
-          </div>
         </Link>
 
         <nav className="desktop-nav">

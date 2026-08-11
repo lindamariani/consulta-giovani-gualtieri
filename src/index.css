@@ -1,7 +1,7 @@
-@import url("https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300;400;500;600;700;800&display=swap");
 
 :root {
-  font-family: "Inter", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   --blue: #203dff;
   --green: #2bd666;
@@ -223,9 +223,9 @@ img {
 .footer-title,
 .event-poster h3,
 .sport-poster h3 {
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
-  font-weight: 400;
+  font-weight: 800;
 
   letter-spacing: -0.055em;
 }
@@ -245,7 +245,7 @@ img {
 
   margin-bottom: 15px;
 
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: 13px;
 }
@@ -533,7 +533,7 @@ img {
 }
 
 .hero-photo-label strong {
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: 19px;
 }
@@ -572,7 +572,7 @@ img {
 .hero-mini-pink strong {
   margin-top: 10px;
 
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: 38px;
 }
@@ -597,7 +597,7 @@ img {
 .hero-mini-yellow strong {
   margin-top: 16px;
 
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: 19px;
 }
@@ -657,7 +657,7 @@ img {
 .hero-star strong {
   margin-top: 3px;
 
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: 15px;
 }
@@ -691,7 +691,7 @@ img {
 
   white-space: nowrap;
 
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: 19px;
 
@@ -844,7 +844,7 @@ img {
 }
 
 .event-number {
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: 12px;
 }
@@ -898,7 +898,7 @@ img {
 }
 
 .graphic-star span {
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: 16px;
 }
@@ -965,7 +965,7 @@ img {
 }
 
 .graphic-circle span {
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: 36px;
 }
@@ -991,7 +991,7 @@ img {
 
   color: var(--blue);
 
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: 84px;
   letter-spacing: -0.2em;
@@ -1010,7 +1010,7 @@ img {
 
   border: 1px solid black;
 
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: 12px;
 
@@ -1160,7 +1160,7 @@ img {
 }
 
 .board-cell strong {
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: 26px;
 }
@@ -1220,7 +1220,7 @@ img {
 
   border-bottom: 1px solid black;
 
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: 22px;
 
@@ -1248,7 +1248,7 @@ img {
 
   color: var(--black);
 
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
   font-size: 22px;
 
   white-space: pre;
@@ -1461,7 +1461,7 @@ img {
 }
 
 .gallery-caption strong {
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: 16px;
 
@@ -1487,7 +1487,7 @@ img {
 .gallery-message strong {
   margin-top: 4px;
 
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: 37px;
 
@@ -1534,7 +1534,7 @@ img {
 
   -webkit-text-stroke: 2px rgba(0, 0, 0, 0.13);
 
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: 260px;
 
@@ -1617,7 +1617,7 @@ img {
 
   box-shadow: 9px 9px 0 var(--pink);
 
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: 19px;
 
@@ -1723,7 +1723,7 @@ img {
 }
 
 .social-handle > span {
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: 45px;
 }
@@ -1731,7 +1731,7 @@ img {
 .social-handle strong {
   margin-top: 20px;
 
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: clamp(36px, 4vw, 58px);
 
@@ -2200,7 +2200,7 @@ img {
 
   -webkit-text-stroke: 2px rgba(255, 255, 255, 0.15);
 
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: clamp(130px, 22vw, 330px);
 
@@ -2256,7 +2256,7 @@ img {
 }
 
 .events-page-heading h1 {
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: clamp(70px, 10vw, 145px);
 
@@ -2360,7 +2360,7 @@ img {
 .events-list-heading > span {
   padding-top: 5px;
 
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: 11px;
 }
@@ -2378,7 +2378,7 @@ img {
 }
 
 .events-list-heading h2 {
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: clamp(45px, 5vw, 69px);
 
@@ -2480,7 +2480,7 @@ img {
   left: 17px;
   bottom: -15px;
 
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: 150px;
 
@@ -2567,7 +2567,7 @@ img {
 .event-list-content h3 {
   max-width: 90%;
 
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: 30px;
 
@@ -2629,7 +2629,7 @@ img {
 }
 
 .events-empty > span {
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: 54px;
 }
@@ -2637,7 +2637,7 @@ img {
 .events-empty h3 {
   margin-top: 20px;
 
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: 34px;
 
@@ -2750,7 +2750,7 @@ img {
 .event-detail-title h1 {
   max-width: 950px;
 
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: clamp(59px, 9vw, 128px);
 
@@ -2781,7 +2781,7 @@ img {
 }
 
 .event-detail-date span {
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: 27px;
 }
@@ -2868,7 +2868,7 @@ img {
 .event-description h2 {
   margin-top: 10px;
 
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: clamp(48px, 6vw, 82px);
 
@@ -2939,7 +2939,7 @@ img {
 }
 
 .event-organizer-box strong {
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: 22px;
 
@@ -2971,7 +2971,7 @@ img {
 .event-gallery-heading h2 {
   margin-top: 8px;
 
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: clamp(57px, 8vw, 105px);
 
@@ -3035,7 +3035,7 @@ img {
 }
 
 .event-not-found span {
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: 20px;
 }
@@ -3043,7 +3043,7 @@ img {
 .event-not-found h1 {
   margin-top: 20px;
 
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: clamp(60px, 9vw, 120px);
 
@@ -3219,7 +3219,7 @@ img {
   right: -35px;
   bottom: -70px;
 
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: clamp(150px, 24vw, 350px);
 
@@ -3282,7 +3282,7 @@ img {
 }
 
 .booking-page-heading h1 {
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: clamp(65px, 9vw, 130px);
 
@@ -3334,7 +3334,7 @@ img {
 .booking-step-number {
   padding-top: 5px;
 
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: 11px;
 }
@@ -3351,7 +3351,7 @@ img {
 }
 
 .booking-step-heading h2 {
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: clamp(43px, 5vw, 69px);
 
@@ -3451,7 +3451,7 @@ img {
 }
 
 .booking-sport-option strong {
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: clamp(48px, 6vw, 82px);
 
@@ -3497,7 +3497,7 @@ img {
 .booking-calendar-header strong {
   text-align: center;
 
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: 17px;
 }
@@ -3568,7 +3568,7 @@ img {
 .booking-day strong {
   margin: 9px 0 5px;
 
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: 36px;
 }
@@ -3653,7 +3653,7 @@ img {
 .booking-slot strong {
   margin-top: auto;
 
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: 25px;
 }
@@ -3884,7 +3884,7 @@ img {
 }
 
 .summary-item strong {
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: 15px;
 
@@ -3920,7 +3920,7 @@ img {
 }
 
 .booking-summary-map span {
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: 25px;
 }
@@ -3969,7 +3969,7 @@ img {
 }
 
 .booking-confirm-button span {
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: 21px;
 
@@ -4074,7 +4074,7 @@ img {
 .booking-success-container h1 {
   margin-top: 15px;
 
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: clamp(62px, 9vw, 125px);
 
@@ -4147,7 +4147,7 @@ img {
 }
 
 .success-ticket-main strong {
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: 16px;
 
@@ -4342,7 +4342,7 @@ img {
 .booking-time-title span {
   color: var(--green);
 
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: 10px;
 }
@@ -4455,7 +4455,7 @@ img {
 .booking-end-option strong {
   margin-top: auto;
 
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: 26px;
 }
@@ -4500,7 +4500,7 @@ img {
 }
 
 .booking-end-empty strong {
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: 25px;
 
@@ -4585,7 +4585,7 @@ img {
   right: -20px;
   bottom: -130px;
 
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: clamp(260px, 38vw, 520px);
 
@@ -4652,7 +4652,7 @@ img {
 }
 
 .ideas-page-heading h1 {
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: clamp(75px, 10vw, 145px);
 
@@ -4733,7 +4733,7 @@ img {
 .idea-block-heading > span {
   padding-top: 4px;
 
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: 10px;
 }
@@ -4750,7 +4750,7 @@ img {
 }
 
 .idea-block-heading h2 {
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: clamp(37px, 4vw, 57px);
 
@@ -4808,7 +4808,7 @@ img {
 }
 
 .idea-category strong {
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: 20px;
 }
@@ -4839,7 +4839,7 @@ img {
 
   color: black;
 
-  font-family: "Inter", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: 18px;
   line-height: 1.55;
@@ -4976,7 +4976,7 @@ img {
 .anonymous-card strong {
   margin-top: auto;
 
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: 21px;
 
@@ -5160,7 +5160,7 @@ img {
 }
 
 .idea-summary-content strong {
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: 13px;
 
@@ -5214,7 +5214,7 @@ img {
 }
 
 .idea-send-button span {
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: 21px;
 
@@ -5320,7 +5320,7 @@ img {
 .idea-success-container h1 {
   margin-top: 15px;
 
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: clamp(55px, 8vw, 110px);
 
@@ -5372,7 +5372,7 @@ img {
 .idea-success-card strong {
   margin-top: 22px;
 
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: 21px;
 
@@ -5516,7 +5516,7 @@ img {
   right: -30px;
   bottom: -90px;
 
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: clamp(190px, 30vw, 430px);
 
@@ -5582,7 +5582,7 @@ img {
 }
 
 .consulta-page-heading h1 {
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: clamp(75px, 10vw, 145px);
 
@@ -5639,7 +5639,7 @@ img {
 
   padding-top: 5px;
 
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: 11px;
 }
@@ -5647,7 +5647,7 @@ img {
 .consulta-intro-copy h2 {
   margin-top: 10px;
 
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: clamp(47px, 5.5vw, 80px);
 
@@ -5723,7 +5723,7 @@ img {
 .consulta-photo-sticker strong {
   margin-top: 5px;
 
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: 26px;
 }
@@ -5749,7 +5749,7 @@ img {
 .consulta-section-title > span {
   padding-top: 5px;
 
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: 10px;
 }
@@ -5766,7 +5766,7 @@ img {
 }
 
 .consulta-section-title h2 {
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: clamp(45px, 5.5vw, 75px);
 
@@ -5823,7 +5823,7 @@ img {
 .consulta-activity h3 {
   margin-top: auto;
 
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: 30px;
 
@@ -5861,7 +5861,7 @@ img {
 
   color: var(--green);
 
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: 11px;
 }
@@ -5882,7 +5882,7 @@ img {
 .consulta-territory-title h2 {
   margin-top: 12px;
 
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: clamp(45px, 5vw, 69px);
 
@@ -5922,7 +5922,7 @@ img {
 .territory-big-card h3 {
   margin-top: auto;
 
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: 37px;
 
@@ -5945,7 +5945,7 @@ img {
 .territory-mini-card strong {
   margin-top: auto;
 
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: 25px;
 
@@ -5994,7 +5994,7 @@ img {
 .process-step strong {
   margin-top: auto;
 
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: 26px;
 }
@@ -6030,7 +6030,7 @@ img {
 .consulta-cta-container h2 {
   margin-top: 10px;
 
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: clamp(50px, 6.5vw, 90px);
 
@@ -6076,7 +6076,7 @@ img {
 }
 
 .consulta-cta-button span {
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: 23px;
 
@@ -6297,7 +6297,7 @@ img {
 .owner-login-heading h1 {
   margin-top: 16px;
 
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: clamp(67px, 9vw, 130px);
 
@@ -6363,7 +6363,7 @@ img {
 }
 
 .owner-login-card-title strong {
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: 32px;
 
@@ -6428,7 +6428,7 @@ img {
 
   border: 1px solid black;
 
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: 18px;
 }
@@ -6484,7 +6484,7 @@ img {
 
   margin-top: 6px;
 
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: 34px;
 }
@@ -6557,7 +6557,7 @@ img {
 .owner-dashboard-header h1 {
   margin-top: 12px;
 
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: clamp(55px, 7vw, 100px);
 
@@ -6632,7 +6632,7 @@ img {
 .owner-stat strong {
   margin-top: auto;
 
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: 70px;
 }
@@ -6657,7 +6657,7 @@ img {
 .owner-quick-section h2 {
   margin-top: 8px;
 
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: 48px;
 }
@@ -6699,7 +6699,7 @@ img {
 .owner-quick-grid button strong {
   margin-top: auto;
 
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: 25px;
 
@@ -6716,7 +6716,7 @@ img {
   background: var(--blue);
   color: white;
 
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 }
 
 /* =========================================================
@@ -6779,7 +6779,7 @@ img {
 .owner-event-form-heading h1 {
   margin-top: 10px;
 
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: clamp(65px, 9vw, 125px);
 
@@ -6830,7 +6830,7 @@ img {
 .owner-new-event strong {
   margin-top: auto;
 
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: 22px;
 
@@ -6895,7 +6895,7 @@ img {
 .owner-event-section-title > span {
   padding-top: 4px;
 
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: 10px;
 }
@@ -6912,7 +6912,7 @@ img {
 }
 
 .owner-event-section-title h2 {
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: 45px;
 
@@ -6971,7 +6971,7 @@ img {
 }
 
 .owner-event-date span {
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: 39px;
 
@@ -7018,7 +7018,7 @@ img {
 .owner-event-main h3 {
   margin-top: 15px;
 
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: 24px;
 
@@ -7107,7 +7107,7 @@ img {
 .owner-form-section-number {
   padding: 22px;
 
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: 13px;
 
@@ -7133,7 +7133,7 @@ img {
 .owner-form-section-content h2 {
   margin-bottom: 10px;
 
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: 39px;
 
@@ -7605,7 +7605,7 @@ img {
 
   border: 1px solid black;
 
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   text-align: center;
 }
@@ -7668,7 +7668,7 @@ img {
 .event-gallery-empty h3 {
   margin-top: 20px;
 
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: clamp(
     32px,
@@ -7770,7 +7770,7 @@ img {
 .owner-poster-upload strong {
   margin-top: auto;
 
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: 28px;
 
@@ -7824,7 +7824,7 @@ img {
 
   background: var(--green);
 
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
 
   font-size: 16px;
 
@@ -8155,7 +8155,7 @@ img {
   margin-top: 10px;
 
   font-family:
-    "Archivo Black",
+    "Funnel Display",
     sans-serif;
 
   font-size: clamp(
@@ -8197,7 +8197,7 @@ img {
 
 .owner-photo-count strong {
   font-family:
-    "Archivo Black",
+    "Funnel Display",
     sans-serif;
 
   font-size: 55px;
@@ -8227,7 +8227,7 @@ img {
   padding-top: 4px;
 
   font-family:
-    "Archivo Black",
+    "Funnel Display",
     sans-serif;
 
   font-size: 10px;
@@ -8246,7 +8246,7 @@ img {
 
 .owner-photo-section-title h2 {
   font-family:
-    "Archivo Black",
+    "Funnel Display",
     sans-serif;
 
   font-size: 45px;
@@ -8288,7 +8288,7 @@ img {
   margin-top: auto;
 
   font-family:
-    "Archivo Black",
+    "Funnel Display",
     sans-serif;
 
   font-size: 31px;
@@ -8328,7 +8328,7 @@ img {
 
 .owner-selected-photos strong {
   font-family:
-    "Archivo Black",
+    "Funnel Display",
     sans-serif;
 
   font-size: 27px;
@@ -8429,7 +8429,7 @@ img {
 
 .owner-photo-empty strong {
   font-family:
-    "Archivo Black",
+    "Funnel Display",
     sans-serif;
 
   font-size: 30px;
@@ -8552,7 +8552,7 @@ img {
   color: var(--green);
 
   font-family:
-    "Archivo Black",
+    "Funnel Display",
     sans-serif;
 
   font-size: 18px;
@@ -8606,7 +8606,7 @@ img {
   margin-top: 10px;
 
   font-family:
-    "Archivo Black",
+    "Funnel Display",
     sans-serif;
 
   font-size: clamp(
@@ -8648,7 +8648,7 @@ img {
 
 .owner-block-court strong {
   font-family:
-    "Archivo Black",
+    "Funnel Display",
     sans-serif;
 
   font-size: 22px;
@@ -8740,7 +8740,7 @@ img {
 
 .owner-booking-date strong {
   font-family:
-    "Archivo Black",
+    "Funnel Display",
     sans-serif;
 
   font-size: 24px;
@@ -8778,7 +8778,7 @@ img {
   margin-top: 15px;
 
   font-family:
-    "Archivo Black",
+    "Funnel Display",
     sans-serif;
 
   font-size: 24px;
@@ -8825,7 +8825,7 @@ img {
 
 .owner-booking-time strong {
   font-family:
-    "Archivo Black",
+    "Funnel Display",
     sans-serif;
 
   font-size: 18px;
@@ -8864,7 +8864,7 @@ img {
 
 .owner-bookings-empty strong {
   font-family:
-    "Archivo Black",
+    "Funnel Display",
     sans-serif;
 
   font-size: 30px;
@@ -8952,7 +8952,7 @@ img {
   margin-top: 10px;
 
   font-family:
-    "Archivo Black",
+    "Funnel Display",
     sans-serif;
 
   font-size: clamp(
@@ -9022,7 +9022,7 @@ img {
   border: 1px solid black;
 
   font-family:
-    "Archivo Black",
+    "Funnel Display",
     sans-serif;
 
   font-size: 18px;
@@ -9130,7 +9130,7 @@ img {
 
 .owner-block-success strong {
   font-family:
-    "Archivo Black",
+    "Funnel Display",
     sans-serif;
 
   font-size: 14px;
@@ -9205,7 +9205,7 @@ img {
 
 .owner-block-row-date strong {
   font-family:
-    "Archivo Black",
+    "Funnel Display",
     sans-serif;
 
   font-size: 24px;
@@ -9248,7 +9248,7 @@ img {
   margin-top: 15px;
 
   font-family:
-    "Archivo Black",
+    "Funnel Display",
     sans-serif;
 
   font-size: 24px;
@@ -9287,7 +9287,7 @@ img {
 
 .owner-block-row-time strong {
   font-family:
-    "Archivo Black",
+    "Funnel Display",
     sans-serif;
 
   font-size: 18px;
@@ -9399,7 +9399,7 @@ img {
   > div:first-child
   strong {
   font-family:
-    "Archivo Black",
+    "Funnel Display",
     sans-serif;
 
   font-size: 18px;
@@ -9426,7 +9426,7 @@ img {
 
 .owner-block-days-badge strong {
   font-family:
-    "Archivo Black",
+    "Funnel Display",
     sans-serif;
 
   font-size: 42px;
@@ -9508,7 +9508,7 @@ img {
   right: 8px;
 
   font-family:
-    "Archivo Black",
+    "Funnel Display",
     sans-serif;
 
   font-size: 17px;
@@ -9570,7 +9570,7 @@ img {
   margin-top: 8px;
 
   font-family:
-    "Archivo Black",
+    "Funnel Display",
     sans-serif;
 
   font-size: clamp(
@@ -9613,7 +9613,7 @@ img {
 
 .owner-ideas-counter strong {
   font-family:
-    "Archivo Black",
+    "Funnel Display",
     sans-serif;
 
   font-size: 52px;
@@ -9764,7 +9764,7 @@ img {
   margin: 35px 0;
 
   font-family:
-    "Archivo Black",
+    "Funnel Display",
     sans-serif;
 
   font-size: clamp(
@@ -9902,7 +9902,7 @@ div {
 
 .owner-ideas-empty strong {
   font-family:
-    "Archivo Black",
+    "Funnel Display",
     sans-serif;
 
   font-size: 30px;
@@ -9970,7 +9970,7 @@ div {
   margin-top: 8px;
 
   font-family:
-    "Archivo Black",
+    "Funnel Display",
     sans-serif;
 
   font-size: clamp(
@@ -10013,7 +10013,7 @@ div {
 
 .owner-photos-counter strong {
   font-family:
-    "Archivo Black",
+    "Funnel Display",
     sans-serif;
 
   font-size: 52px;
@@ -10104,7 +10104,7 @@ div {
   margin-top: 12px;
 
   font-family:
-    "Archivo Black",
+    "Funnel Display",
     sans-serif;
 
   font-size: 25px;
@@ -10175,7 +10175,7 @@ div {
 
 .owner-photos-empty strong {
   font-family:
-    "Archivo Black",
+    "Funnel Display",
     sans-serif;
 
   font-size: 30px;
@@ -10482,7 +10482,7 @@ body,
 
   white-space: nowrap;
 
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
   font-size: 22px;
 }
 
@@ -11273,7 +11273,7 @@ body,
 
 .owner-settings-heading h1 {
   margin-top: 12px;
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
   font-size: clamp(64px, 8vw, 112px);
   line-height: 0.76;
   letter-spacing: -0.07em;
@@ -11300,7 +11300,7 @@ body,
 }
 
 .owner-settings-badge strong {
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
   font-size: 25px;
   line-height: 0.88;
 }
@@ -11339,7 +11339,7 @@ body,
   place-items: center;
   background: var(--green);
   border: 1px solid var(--black);
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
   font-size: 12px;
 }
 
@@ -11352,7 +11352,7 @@ body,
 }
 
 .owner-settings-card-title h2 {
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
   font-size: clamp(25px, 3vw, 39px);
   line-height: 0.92;
 }
@@ -11444,7 +11444,7 @@ body,
   color: white;
   border: 1px solid var(--black);
   box-shadow: 6px 6px 0 var(--black);
-  font-family: "Archivo Black", sans-serif;
+  font-family: "Funnel Display", sans-serif;
   font-size: 12px;
   text-align: left;
   cursor: pointer;
@@ -11516,3 +11516,359 @@ body,
     box-shadow: 6px 6px 0 var(--pink);
   }
 }
+
+.navbar-logo {
+  display: flex;
+  align-items: center;
+  height: 74px;
+  margin-left: -35px;
+}
+
+.navbar-logo-image {
+  display: block;
+  width: 210px;
+  height: auto;
+  max-height: 66px;
+  object-fit: contain;
+}
+
+@media (max-width: 700px) {
+  .navbar-logo {
+    height: 64px;
+  }
+
+  .navbar-logo-image {
+    width: 170px;
+    max-height: 58px;
+  }
+}
+
+/* =========================================================
+   EVENT MEDIA GALLERY — FOTO + VIDEO
+   Layout automatico in base alle proporzioni
+========================================================= */
+
+.event-media-grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  grid-auto-rows: clamp(92px, 9vw, 118px);
+  grid-auto-flow: dense;
+  gap: 16px;
+}
+
+.event-media-card {
+  position: relative;
+  min-width: 0;
+  overflow: hidden;
+  background: #050505;
+  border: 1px solid rgba(255, 255, 255, 0.82);
+}
+
+.event-media-horizontal {
+  grid-column: span 9;
+  grid-row: span 4;
+}
+
+.event-media-vertical {
+  grid-column: span 3;
+  grid-row: span 4;
+}
+
+.event-media-square {
+  grid-column: span 4;
+  grid-row: span 3;
+}
+
+.event-media-card > img,
+.event-media-video,
+.event-media-video > video {
+  width: 100%;
+  height: 100%;
+}
+
+.event-media-card > img,
+.event-media-video > video {
+  display: block;
+  object-fit: cover;
+}
+
+.event-media-card > img,
+.event-media-video > video {
+  transition: transform 0.35s ease;
+}
+
+.event-media-card:hover > img,
+.event-media-card:hover .event-media-video > video {
+  transform: scale(1.025);
+}
+
+.event-media-video {
+  position: relative;
+  cursor: pointer;
+}
+
+.event-media-audio-button {
+  position: absolute;
+  z-index: 4;
+  right: 12px;
+  top: 12px;
+
+  min-height: 37px;
+  padding: 0 11px;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+
+  background: rgba(17, 17, 17, 0.86);
+  color: white;
+
+  border: 1px solid rgba(255, 255, 255, 0.85);
+
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+
+  backdrop-filter: blur(8px);
+}
+
+.event-media-number,
+.event-media-video-label {
+  position: absolute;
+  z-index: 3;
+
+  padding: 6px 8px;
+
+  border: 1px solid black;
+
+  font-size: 8px;
+  font-weight: 800;
+}
+
+.event-media-number {
+  left: 10px;
+  bottom: 10px;
+
+  background: white;
+  color: black;
+}
+
+.event-media-video-label {
+  right: 10px;
+  bottom: 10px;
+
+  background: var(--green);
+  color: black;
+}
+
+/* =========================================================
+   OWNER MEDIA — upload e preview
+========================================================= */
+
+.owner-media-upload-icons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.owner-selected-media-list {
+  margin-top: 12px;
+
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 8px;
+}
+
+.owner-selected-media-list > div {
+  min-width: 0;
+
+  padding: 11px 13px;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  background: white;
+
+  border: 1px solid black;
+}
+
+.owner-selected-media-list span {
+  flex: 0 0 auto;
+
+  padding: 4px 6px;
+
+  background: var(--yellow);
+
+  border: 1px solid black;
+
+  font-size: 7px;
+  font-weight: 900;
+}
+
+.owner-selected-media-list strong {
+  min-width: 0;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  font-size: 9px;
+}
+
+.owner-media-progress {
+  margin-top: 12px;
+  padding: 15px;
+
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(180px, 0.8fr) auto;
+  align-items: center;
+  gap: 15px;
+
+  background: var(--black);
+  color: white;
+
+  border: 1px solid black;
+}
+
+.owner-media-progress > div:first-child {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.owner-media-progress > div:first-child span {
+  color: var(--green);
+
+  font-size: 7px;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+}
+
+.owner-media-progress > div:first-child strong {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  font-size: 10px;
+}
+
+.owner-media-progress-track {
+  height: 12px;
+
+  overflow: hidden;
+
+  background: #333;
+
+  border: 1px solid white;
+}
+
+.owner-media-progress-track span {
+  display: block;
+  height: 100%;
+
+  background: var(--green);
+
+  transition: width 0.12s linear;
+}
+
+.owner-media-progress b {
+  font-family: "Funnel Display", sans-serif;
+  font-size: 16px;
+}
+
+.owner-media-preview {
+  position: relative;
+
+  width: 100%;
+  aspect-ratio: 1 / 1;
+
+  overflow: hidden;
+
+  background: #111;
+}
+
+.owner-media-preview img,
+.owner-media-preview video {
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  object-fit: cover;
+  aspect-ratio: auto;
+}
+
+.owner-media-type-badge {
+  position: absolute;
+  z-index: 3;
+
+  left: 9px;
+  top: 9px;
+
+  padding: 5px 7px;
+
+  background: var(--green);
+  color: black;
+
+  border: 1px solid black;
+
+  font-size: 7px;
+  font-weight: 900;
+
+  text-transform: uppercase;
+}
+
+@media (max-width: 700px) {
+  .event-media-grid {
+    grid-template-columns: 1fr;
+    grid-auto-rows: auto;
+    gap: 12px;
+  }
+
+  .event-media-horizontal,
+  .event-media-vertical,
+  .event-media-square {
+    grid-column: auto;
+    grid-row: auto;
+  }
+
+  .event-media-horizontal {
+    aspect-ratio: 16 / 9;
+  }
+
+  .event-media-vertical {
+    aspect-ratio: 9 / 16;
+  }
+
+  .event-media-square {
+    aspect-ratio: 1 / 1;
+  }
+
+  .event-media-audio-button {
+    right: 10px;
+    top: 10px;
+  }
+
+  .event-media-card:hover > img,
+  .event-media-card:hover .event-media-video > video {
+    transform: none;
+  }
+
+  .owner-selected-media-list {
+    grid-template-columns: 1fr;
+  }
+
+  .owner-media-progress {
+    grid-template-columns: 1fr auto;
+  }
+
+  .owner-media-progress-track {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+}
+

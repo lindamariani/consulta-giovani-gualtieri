@@ -1,5 +1,6 @@
 import {
   ArrowLeft,
+  Film,
   ImagePlus,
   Trash2,
   Upload,
@@ -16,16 +17,63 @@ import {
   useParams,
 } from "react-router-dom";
 
+import * as tus from "tus-js-client";
+
 import { supabase } from "../lib/supabase";
 
-type EventPhoto = {
+import type {
+  EventMediaOrientation,
+  EventMediaRecord,
+  EventMediaType,
+} from "../types/event";
+
+const BUCKET_NAME =
+  "event-gallery";
+
+const STANDARD_UPLOAD_LIMIT =
+  6 * 1024 * 1024;
+
+const MAX_IMAGE_SIZE =
+  10 * 1024 * 1024;
+
+const SUPPORTED_IMAGE_TYPES = [
+  "image/jpeg",
+  "image/png",
+  "image/webp",
+];
+
+const SUPPORTED_VIDEO_TYPES = [
+  "video/mp4",
+  "video/webm",
+];
+
+type EventInfo = {
   id: string;
+  title: string;
+  slug: string;
+  event_date: string;
+};
+
+type MediaMetadata = {
+  media_type: EventMediaType;
+  width: number;
+  height: number;
+  aspect_ratio: number;
+  orientation:
+    EventMediaOrientation;
+};
+
+type NewMediaRow = {
   event_id: string;
   image_url: string;
-  storage_path: string | null;
-  caption: string | null;
+  storage_path: string;
   sort_order: number;
-  created_at: string;
+  media_type: EventMediaType;
+  width: number;
+  height: number;
+  aspect_ratio: number;
+  orientation:
+    EventMediaOrientation;
 };
 
 function extractStoragePath(
@@ -49,138 +97,633 @@ function extractStoragePath(
   );
 }
 
-type EventInfo = {
-  id: string;
-  title: string;
-  slug: string;
-  event_date: string;
-};
+function getOrientation(
+  width: number,
+  height: number
+): EventMediaOrientation {
+  const ratio =
+    width / height;
+
+  if (ratio <= 0.82) {
+    return "vertical";
+  }
+
+  if (ratio >= 1.22) {
+    return "horizontal";
+  }
+
+  return "square";
+}
+
+function getFileMetadata(
+  file: File
+): Promise<MediaMetadata> {
+  const objectUrl =
+    URL.createObjectURL(file);
+
+  if (
+    SUPPORTED_IMAGE_TYPES.includes(
+      file.type
+    )
+  ) {
+    return new Promise(
+      (resolve, reject) => {
+        const image =
+          new Image();
+
+        image.onload = () => {
+          const width =
+            image.naturalWidth;
+
+          const height =
+            image.naturalHeight;
+
+          URL.revokeObjectURL(
+            objectUrl
+          );
+
+          if (
+            !width ||
+            !height
+          ) {
+            reject(
+              new Error(
+                "Dimensioni immagine non valide."
+              )
+            );
+
+            return;
+          }
+
+          resolve({
+            media_type:
+              "image",
+
+            width,
+            height,
+
+            aspect_ratio:
+              width / height,
+
+            orientation:
+              getOrientation(
+                width,
+                height
+              ),
+          });
+        };
+
+        image.onerror = () => {
+          URL.revokeObjectURL(
+            objectUrl
+          );
+
+          reject(
+            new Error(
+              "Non riesco a leggere l'immagine."
+            )
+          );
+        };
+
+        image.src =
+          objectUrl;
+      }
+    );
+  }
+
+  return new Promise(
+    (resolve, reject) => {
+      const video =
+        document.createElement(
+          "video"
+        );
+
+      video.preload =
+        "metadata";
+
+      video.muted = true;
+
+      video.playsInline =
+        true;
+
+      video.onloadedmetadata =
+        () => {
+          const width =
+            video.videoWidth;
+
+          const height =
+            video.videoHeight;
+
+          URL.revokeObjectURL(
+            objectUrl
+          );
+
+          if (
+            !width ||
+            !height
+          ) {
+            reject(
+              new Error(
+                "Dimensioni video non valide."
+              )
+            );
+
+            return;
+          }
+
+          resolve({
+            media_type:
+              "video",
+
+            width,
+            height,
+
+            aspect_ratio:
+              width / height,
+
+            orientation:
+              getOrientation(
+                width,
+                height
+              ),
+          });
+        };
+
+      video.onerror = () => {
+        URL.revokeObjectURL(
+          objectUrl
+        );
+
+        reject(
+          new Error(
+            "Non riesco a leggere il video. Usa MP4 o WebM."
+          )
+        );
+      };
+
+      video.src =
+        objectUrl;
+    }
+  );
+}
+
+async function uploadWithTus(
+  file: File,
+  storagePath: string,
+  onProgress: (
+    percentage: number
+  ) => void
+) {
+  const {
+    data: {
+      session,
+    },
+  } =
+    await supabase.auth.getSession();
+
+  if (!session) {
+    throw new Error(
+      "Sessione scaduta."
+    );
+  }
+
+  const supabaseUrl =
+    import.meta.env
+      .VITE_SUPABASE_URL as string;
+
+  const projectId =
+    new URL(
+      supabaseUrl
+    ).hostname.split(".")[0];
+
+  await new Promise<void>(
+    (resolve, reject) => {
+      const upload =
+        new tus.Upload(
+          file,
+          {
+            endpoint:
+              `https://${projectId}.storage.supabase.co/storage/v1/upload/resumable`,
+
+            retryDelays: [
+              0,
+              3000,
+              5000,
+              10000,
+              20000,
+            ],
+
+            headers: {
+              authorization:
+                `Bearer ${session.access_token}`,
+
+              "x-upsert":
+                "false",
+            },
+
+            uploadDataDuringCreation:
+              true,
+
+            removeFingerprintOnSuccess:
+              true,
+
+            metadata: {
+              bucketName:
+                BUCKET_NAME,
+
+              objectName:
+                storagePath,
+
+              contentType:
+                file.type,
+
+              cacheControl:
+                "3600",
+            },
+
+            chunkSize:
+              6 *
+              1024 *
+              1024,
+
+            onError: (
+              uploadError
+            ) => {
+              reject(
+                uploadError
+              );
+            },
+
+            onProgress: (
+              bytesUploaded,
+              bytesTotal
+            ) => {
+              const percentage =
+                bytesTotal > 0
+                  ? Math.round(
+                      (bytesUploaded /
+                        bytesTotal) *
+                        100
+                    )
+                  : 0;
+
+              onProgress(
+                percentage
+              );
+            },
+
+            onSuccess: () => {
+              onProgress(100);
+              resolve();
+            },
+          }
+        );
+
+      upload
+        .findPreviousUploads()
+        .then(
+          (
+            previousUploads
+          ) => {
+            if (
+              previousUploads.length >
+              0
+            ) {
+              upload.resumeFromPreviousUpload(
+                previousUploads[0]
+              );
+            }
+
+            upload.start();
+          }
+        )
+        .catch(reject);
+    }
+  );
+}
+
+async function uploadStorageFile(
+  file: File,
+  storagePath: string,
+  onProgress: (
+    percentage: number
+  ) => void
+) {
+  if (
+    file.size >
+    STANDARD_UPLOAD_LIMIT
+  ) {
+    await uploadWithTus(
+      file,
+      storagePath,
+      onProgress
+    );
+
+    return;
+  }
+
+  onProgress(10);
+
+  const {
+    error:
+      uploadError,
+  } =
+    await supabase.storage
+      .from(BUCKET_NAME)
+      .upload(
+        storagePath,
+        file,
+        {
+          cacheControl:
+            "3600",
+
+          contentType:
+            file.type,
+
+          upsert: false,
+        }
+      );
+
+  if (uploadError) {
+    throw uploadError;
+  }
+
+  onProgress(100);
+}
 
 function OwnerEventPhotosPage() {
-  const { id } = useParams();
+  const { id } =
+    useParams();
 
-  const navigate = useNavigate();
+  const navigate =
+    useNavigate();
 
-  const [event, setEvent] =
-    useState<EventInfo | null>(null);
+  const [
+    event,
+    setEvent,
+  ] =
+    useState<EventInfo | null>(
+      null
+    );
 
-  const [photos, setPhotos] =
-    useState<EventPhoto[]>([]);
+  const [
+    media,
+    setMedia,
+  ] =
+    useState<
+      EventMediaRecord[]
+    >([]);
 
-  const [selectedFiles, setSelectedFiles] =
+  const [
+    selectedFiles,
+    setSelectedFiles,
+  ] =
     useState<File[]>([]);
 
-  const [uploading, setUploading] =
+  const [
+    uploading,
+    setUploading,
+  ] =
     useState(false);
 
-  const [loading, setLoading] =
+  const [
+    uploadProgress,
+    setUploadProgress,
+  ] =
+    useState(0);
+
+  const [
+    uploadingFile,
+    setUploadingFile,
+  ] =
+    useState("");
+
+  const [
+    loading,
+    setLoading,
+  ] =
     useState(true);
 
-  const [error, setError] =
+  const [
+    error,
+    setError,
+  ] =
     useState("");
 
   useEffect(() => {
     if (!id) {
-      navigate("/owner/eventi");
+      navigate(
+        "/owner/eventi"
+      );
+
       return;
     }
 
-    const loadData = async () => {
-      setLoading(true);
-      setError("");
+    const loadData =
+      async () => {
+        setLoading(true);
+        setError("");
 
-      const {
-        data: eventData,
-        error: eventError,
-      } = await supabase
-        .from("events")
-        .select(
-          "id, title, slug, event_date"
-        )
-        .eq("id", id)
-        .single();
+        const {
+          data: {
+            user,
+          },
+        } =
+          await supabase.auth.getUser();
 
-      if (
-        eventError ||
-        !eventData
-      ) {
-        console.error(
-          eventError
+        if (!user) {
+          navigate(
+            "/owner/login",
+            {
+              replace: true,
+            }
+          );
+
+          return;
+        }
+
+        const {
+          data:
+            profile,
+          error:
+            profileError,
+        } =
+          await supabase
+            .from(
+              "profiles"
+            )
+            .select(
+              "role"
+            )
+            .eq(
+              "id",
+              user.id
+            )
+            .single();
+
+        if (
+          profileError ||
+          profile?.role !==
+            "owner"
+        ) {
+          await supabase.auth.signOut();
+
+          navigate(
+            "/owner/login",
+            {
+              replace: true,
+            }
+          );
+
+          return;
+        }
+
+        const {
+          data:
+            eventData,
+          error:
+            eventError,
+        } =
+          await supabase
+            .from(
+              "events"
+            )
+            .select(
+              "id, title, slug, event_date"
+            )
+            .eq(
+              "id",
+              id
+            )
+            .single();
+
+        if (
+          eventError ||
+          !eventData
+        ) {
+          console.error(
+            eventError
+          );
+
+          setError(
+            "Evento non trovato."
+          );
+
+          setLoading(false);
+
+          return;
+        }
+
+        setEvent(
+          eventData
         );
 
-        setError(
-          "Evento non trovato."
+        const {
+          data:
+            mediaData,
+          error:
+            mediaError,
+        } =
+          await supabase
+            .from(
+              "event_photos"
+            )
+            .select("*")
+            .eq(
+              "event_id",
+              id
+            )
+            .order(
+              "sort_order",
+              {
+                ascending:
+                  true,
+              }
+            )
+            .order(
+              "created_at",
+              {
+                ascending:
+                  true,
+              }
+            );
+
+        if (mediaError) {
+          console.error(
+            mediaError
+          );
+
+          setError(
+            "Non riesco a caricare i media."
+          );
+
+          setLoading(false);
+
+          return;
+        }
+
+        setMedia(
+          (mediaData ??
+            []) as EventMediaRecord[]
         );
 
         setLoading(false);
-
-        return;
-      }
-
-      setEvent(eventData);
-
-      const {
-        data: photoData,
-        error: photoError,
-      } = await supabase
-        .from("event_photos")
-        .select("*")
-        .eq("event_id", id)
-        .order("sort_order", {
-          ascending: true,
-        })
-        .order("created_at", {
-          ascending: true,
-        });
-
-      if (photoError) {
-        console.error(
-          photoError
-        );
-
-        setError(
-          "Non riesco a caricare le foto."
-        );
-
-        setLoading(false);
-
-        return;
-      }
-
-      setPhotos(
-        (photoData ??
-          []) as EventPhoto[]
-      );
-
-      setLoading(false);
-    };
+      };
 
     loadData();
-  }, [id, navigate]);
+  }, [
+    id,
+    navigate,
+  ]);
 
   const handleFileSelection = (
     files: FileList | null
   ) => {
-    if (!files) return;
+    if (!files) {
+      return;
+    }
+
+    const chosenFiles =
+      Array.from(files);
 
     const validFiles =
-      Array.from(files).filter(
-        (file) =>
-          [
-            "image/jpeg",
-            "image/png",
-            "image/webp",
-          ].includes(file.type) &&
-          file.size <=
-            10 * 1024 * 1024
+      chosenFiles.filter(
+        (file) => {
+          const isImage =
+            SUPPORTED_IMAGE_TYPES.includes(
+              file.type
+            );
+
+          const isVideo =
+            SUPPORTED_VIDEO_TYPES.includes(
+              file.type
+            );
+
+          if (
+            !isImage &&
+            !isVideo
+          ) {
+            return false;
+          }
+
+          if (
+            isImage &&
+            file.size >
+              MAX_IMAGE_SIZE
+          ) {
+            return false;
+          }
+
+          return true;
+        }
       );
 
     if (
       validFiles.length !==
-      files.length
+      chosenFiles.length
     ) {
       setError(
-        "Alcuni file sono stati ignorati. Sono accettati JPG, PNG e WebP fino a 10 MB."
+        "Alcuni file sono stati ignorati. Foto: JPG, PNG o WebP fino a 10 MB. Video: MP4 o WebM."
       );
     } else {
       setError("");
@@ -191,28 +734,28 @@ function OwnerEventPhotosPage() {
     );
   };
 
-  const uploadPhotos =
+  const uploadMedia =
     async () => {
       if (
         !event ||
-        selectedFiles.length === 0
+        selectedFiles.length ===
+          0
       ) {
         return;
       }
 
       setUploading(true);
+      setUploadProgress(0);
+      setUploadingFile("");
       setError("");
 
-      try {
-        const uploadedPhotos: {
-          event_id: string;
-          image_url: string;
-          storage_path: string;
-          sort_order: number;
-        }[] = [];
+      const uploadedPaths:
+        string[] = [];
 
-        const uploadedPaths:
-          string[] = [];
+      try {
+        const rows:
+          NewMediaRow[] =
+          [];
 
         for (
           let index = 0;
@@ -221,79 +764,104 @@ function OwnerEventPhotosPage() {
           index++
         ) {
           const file =
-            selectedFiles[index];
+            selectedFiles[
+              index
+            ];
+
+          setUploadingFile(
+            file.name
+          );
+
+          setUploadProgress(
+            0
+          );
+
+          const metadata =
+            await getFileMetadata(
+              file
+            );
 
           const extension =
             file.name
               .split(".")
               .pop()
               ?.toLowerCase() ||
-            "jpg";
+            (metadata.media_type ===
+            "video"
+              ? "mp4"
+              : "jpg");
 
-          const path =
+          const storagePath =
             `${event.slug}/${crypto.randomUUID()}.${extension}`;
 
-          const {
-            error:
-              uploadError,
-          } =
-            await supabase.storage
-              .from(
-                "event-gallery"
-              )
-              .upload(
-                path,
-                file,
-                {
-                  cacheControl:
-                    "3600",
-                  upsert: false,
-                }
-              );
-
-          if (uploadError) {
-            throw uploadError;
-          }
-
-          const { data } =
-            supabase.storage
-              .from(
-                "event-gallery"
-              )
-              .getPublicUrl(
-                path
-              );
-
-          uploadedPaths.push(
-            path
+          await uploadStorageFile(
+            file,
+            storagePath,
+            setUploadProgress
           );
 
-          uploadedPhotos.push({
+          uploadedPaths.push(
+            storagePath
+          );
+
+          const {
+            data:
+              publicUrlData,
+          } =
+            supabase.storage
+              .from(
+                BUCKET_NAME
+              )
+              .getPublicUrl(
+                storagePath
+              );
+
+          rows.push({
             event_id:
               event.id,
 
             image_url:
-              data.publicUrl,
+              publicUrlData.publicUrl,
 
             storage_path:
-              path,
+              storagePath,
 
             sort_order:
-              photos.length +
+              media.length +
               index,
+
+            media_type:
+              metadata.media_type,
+
+            width:
+              metadata.width,
+
+            height:
+              metadata.height,
+
+            aspect_ratio:
+              Number(
+                metadata.aspect_ratio.toFixed(
+                  4
+                )
+              ),
+
+            orientation:
+              metadata.orientation,
           });
         }
 
         const {
           error:
             insertError,
-        } = await supabase
-          .from(
-            "event_photos"
-          )
-          .insert(
-            uploadedPhotos
-          );
+        } =
+          await supabase
+            .from(
+              "event_photos"
+            )
+            .insert(
+              rows
+            );
 
         if (insertError) {
           if (
@@ -306,7 +874,7 @@ function OwnerEventPhotosPage() {
             } =
               await supabase.storage
                 .from(
-                  "event-gallery"
+                  BUCKET_NAME
                 )
                 .remove(
                   uploadedPaths
@@ -324,53 +892,79 @@ function OwnerEventPhotosPage() {
         }
 
         const {
-          data: refreshed,
+          data:
+            refreshed,
           error:
             refreshError,
-        } = await supabase
-          .from(
-            "event_photos"
-          )
-          .select("*")
-          .eq(
-            "event_id",
-            event.id
-          )
-          .order(
-            "sort_order",
-            {
-              ascending: true,
-            }
-          );
+        } =
+          await supabase
+            .from(
+              "event_photos"
+            )
+            .select("*")
+            .eq(
+              "event_id",
+              event.id
+            )
+            .order(
+              "sort_order",
+              {
+                ascending:
+                  true,
+              }
+            )
+            .order(
+              "created_at",
+              {
+                ascending:
+                  true,
+              }
+            );
 
         if (refreshError) {
           throw refreshError;
         }
 
-        setPhotos(
+        setMedia(
           (refreshed ??
-            []) as EventPhoto[]
+            []) as EventMediaRecord[]
         );
 
-        setSelectedFiles([]);
+        setSelectedFiles(
+          []
+        );
+
+        setUploadingFile(
+          ""
+        );
+
+        setUploadProgress(
+          0
+        );
       } catch (err) {
         console.error(err);
 
         setError(
-          "Errore durante il caricamento delle foto."
+          "Errore durante il caricamento. Controlla il limite file del bucket Supabase e riprova."
         );
       }
 
       setUploading(false);
     };
 
-  const deletePhoto =
+  const deleteMedia =
     async (
-      photo: EventPhoto
+      item: EventMediaRecord
     ) => {
+      const label =
+        item.media_type ===
+        "video"
+          ? "video"
+          : "foto";
+
       const confirmed =
         window.confirm(
-          "Vuoi eliminare questa foto?"
+          `Vuoi eliminare questo ${label}?`
         );
 
       if (!confirmed) {
@@ -380,19 +974,25 @@ function OwnerEventPhotosPage() {
       setError("");
 
       const storagePath =
-        photo.storage_path ??
+        item.storage_path ??
         extractStoragePath(
-          photo.image_url,
-          "event-gallery"
+          item.image_url,
+          BUCKET_NAME
         );
 
       const {
         error:
           databaseError,
-      } = await supabase
-        .from("event_photos")
-        .delete()
-        .eq("id", photo.id);
+      } =
+        await supabase
+          .from(
+            "event_photos"
+          )
+          .delete()
+          .eq(
+            "id",
+            item.id
+          );
 
       if (databaseError) {
         console.error(
@@ -400,18 +1000,20 @@ function OwnerEventPhotosPage() {
         );
 
         setError(
-          "Errore durante l'eliminazione della foto."
+          "Errore durante l'eliminazione del media."
         );
 
         return;
       }
 
-      setPhotos(
+      setMedia(
         (current) =>
           current.filter(
-            (item) =>
-              item.id !==
-              photo.id
+            (
+              currentItem
+            ) =>
+              currentItem.id !==
+              item.id
           )
       );
 
@@ -422,7 +1024,7 @@ function OwnerEventPhotosPage() {
         } =
           await supabase.storage
             .from(
-              "event-gallery"
+              BUCKET_NAME
             )
             .remove([
               storagePath,
@@ -434,7 +1036,7 @@ function OwnerEventPhotosPage() {
           );
 
           setError(
-            "La foto è stata rimossa dalla gallery, ma non sono riuscito a cancellare il file dallo Storage."
+            "Il media è stato rimosso dalla gallery, ma non sono riuscito a cancellare il file dallo Storage."
           );
         }
       }
@@ -443,7 +1045,7 @@ function OwnerEventPhotosPage() {
   if (loading) {
     return (
       <main className="owner-loading">
-        CARICAMENTO FOTO...
+        CARICAMENTO MEDIA...
       </main>
     );
   }
@@ -456,20 +1058,33 @@ function OwnerEventPhotosPage() {
     );
   }
 
+  const videoCount =
+    media.filter(
+      (item) =>
+        item.media_type ===
+        "video"
+    ).length;
+
+  const imageCount =
+    media.length -
+    videoCount;
+
   return (
     <main className="owner-event-photos-page">
       <div className="container owner-event-photos-container">
         <div className="owner-events-topbar">
           <Link
-            to="/owner/eventi"
+            to="/owner/foto"
             className="owner-events-back"
           >
-            <ArrowLeft size={17} />
-            Eventi
+            <ArrowLeft
+              size={17}
+            />
+            Media
           </Link>
 
           <span>
-            CONSULTA / FOTO
+            CONSULTA / MEDIA
           </span>
         </div>
 
@@ -480,9 +1095,9 @@ function OwnerEventPhotosPage() {
             </span>
 
             <h1>
-              CARICA
+              FOTO +
               <br />
-              LE FOTO.
+              VIDEO.
             </h1>
 
             <p>
@@ -492,11 +1107,12 @@ function OwnerEventPhotosPage() {
 
           <div className="owner-photo-count">
             <strong>
-              {photos.length}
+              {media.length}
             </strong>
 
             <span>
-              FOTO
+              MEDIA · {imageCount} FOTO ·{" "}
+              {videoCount} VIDEO
             </span>
           </div>
         </div>
@@ -507,7 +1123,7 @@ function OwnerEventPhotosPage() {
 
             <div>
               <small>
-                NUOVE FOTO
+                NUOVI MEDIA
               </small>
 
               <h2>
@@ -519,63 +1135,123 @@ function OwnerEventPhotosPage() {
           <label className="owner-gallery-upload">
             <input
               type="file"
-              accept="image/jpeg,image/png,image/webp"
+              accept="image/jpeg,image/png,image/webp,video/mp4,video/webm"
               multiple
-              onChange={(e) =>
+              onChange={(event) =>
                 handleFileSelection(
-                  e.target.files
+                  event.target.files
                 )
               }
             />
 
-            <ImagePlus
-              size={39}
-            />
+            <div className="owner-media-upload-icons">
+              <ImagePlus
+                size={35}
+              />
+
+              <Film
+                size={35}
+              />
+            </div>
 
             <strong>
-              SELEZIONA
+              FOTO O
               <br />
-              LE FOTO
+              VIDEO
             </strong>
 
             <span>
-              Puoi selezionarne
-              più di una
+              Seleziona anche più
+              file insieme. Il sito
+              riconosce automaticamente
+              formato e proporzioni.
             </span>
           </label>
 
           {selectedFiles.length >
             0 && (
-            <div className="owner-selected-photos">
-              <div>
-                <strong>
-                  {
-                    selectedFiles.length
-                  }
-                </strong>
+            <>
+              <div className="owner-selected-media-list">
+                {selectedFiles.map(
+                  (file) => (
+                    <div
+                      key={`${file.name}-${file.lastModified}`}
+                    >
+                      <span>
+                        {file.type.startsWith(
+                          "video/"
+                        )
+                          ? "VIDEO"
+                          : "FOTO"}
+                      </span>
 
-                <span>
-                  FOTO SELEZIONATE
-                </span>
+                      <strong>
+                        {file.name}
+                      </strong>
+                    </div>
+                  )
+                )}
               </div>
 
-              <button
-                type="button"
-                onClick={
-                  uploadPhotos
-                }
-                disabled={
-                  uploading
-                }
-              >
-                <Upload
-                  size={21}
-                />
+              <div className="owner-selected-photos">
+                <div>
+                  <strong>
+                    {
+                      selectedFiles.length
+                    }
+                  </strong>
 
-                {uploading
-                  ? "CARICAMENTO..."
-                  : "CARICA FOTO"}
-              </button>
+                  <span>
+                    MEDIA SELEZIONATI
+                  </span>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={
+                    uploadMedia
+                  }
+                  disabled={
+                    uploading
+                  }
+                >
+                  <Upload
+                    size={21}
+                  />
+
+                  {uploading
+                    ? "CARICAMENTO..."
+                    : "CARICA MEDIA"}
+                </button>
+              </div>
+            </>
+          )}
+
+          {uploading &&
+            uploadingFile && (
+            <div className="owner-media-progress">
+              <div>
+                <span>
+                  STO CARICANDO
+                </span>
+
+                <strong>
+                  {uploadingFile}
+                </strong>
+              </div>
+
+              <div className="owner-media-progress-track">
+                <span
+                  style={{
+                    width:
+                      `${uploadProgress}%`,
+                  }}
+                />
+              </div>
+
+              <b>
+                {uploadProgress}%
+              </b>
             </div>
           )}
 
@@ -596,12 +1272,12 @@ function OwnerEventPhotosPage() {
               </small>
 
               <h2>
-                FOTO CARICATE.
+                MEDIA CARICATI.
               </h2>
             </div>
           </div>
 
-          {photos.length ===
+          {media.length ===
           0 ? (
             <div className="owner-photo-empty">
               <ImagePlus
@@ -609,35 +1285,60 @@ function OwnerEventPhotosPage() {
               />
 
               <strong>
-                ANCORA NESSUNA
-                FOTO.
+                ANCORA NESSUN
+                MEDIA.
               </strong>
             </div>
           ) : (
-            <div className="owner-photo-grid">
-              {photos.map(
+            <div className="owner-photo-grid owner-media-grid">
+              {media.map(
                 (
-                  photo,
+                  item,
                   index
                 ) => (
                   <article
                     key={
-                      photo.id
+                      item.id
                     }
-                    className="owner-photo-card"
+                    className="owner-photo-card owner-media-card"
                   >
-                    <img
-                      src={
-                        photo.image_url
-                      }
-                      alt={`${event.title} ${
-                        index + 1
-                      }`}
-                    />
+                    <div className="owner-media-preview">
+                      {item.media_type ===
+                      "video" ? (
+                        <video
+                          src={
+                            item.image_url
+                          }
+                          muted
+                          playsInline
+                          controls
+                          preload="metadata"
+                        />
+                      ) : (
+                        <img
+                          src={
+                            item.image_url
+                          }
+                          alt={`${event.title} ${
+                            index + 1
+                          }`}
+                        />
+                      )}
+
+                      <span className="owner-media-type-badge">
+                        {item.media_type ===
+                        "video"
+                          ? "VIDEO"
+                          : "FOTO"}
+                        {" · "}
+                        {item.orientation ??
+                          "AUTO"}
+                      </span>
+                    </div>
 
                     <div className="owner-photo-card-footer">
                       <span>
-                        FOTO{" "}
+                        MEDIA{" "}
                         {String(
                           index +
                             1
@@ -650,10 +1351,11 @@ function OwnerEventPhotosPage() {
                       <button
                         type="button"
                         onClick={() =>
-                          deletePhoto(
-                            photo
+                          deleteMedia(
+                            item
                           )
                         }
+                        aria-label="Elimina media"
                       >
                         <Trash2
                           size={17}
