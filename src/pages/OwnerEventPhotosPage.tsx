@@ -34,7 +34,7 @@ const STANDARD_UPLOAD_LIMIT =
   6 * 1024 * 1024;
 
 const MAX_IMAGE_SIZE =
-  10 * 1024 * 1024;
+  50 * 1024 * 1024;
 
 const SUPPORTED_IMAGE_TYPES = [
   "image/jpeg",
@@ -723,8 +723,7 @@ function OwnerEventPhotosPage() {
       chosenFiles.length
     ) {
       setError(
-        "Alcuni file sono stati ignorati. Foto: JPG, PNG o WebP fino a 10 MB. Video: MP4 o WebM."
-      );
+"Alcuni file sono stati ignorati. Sono accettati JPG, PNG e WebP fino a 50 MB."      );
     } else {
       setError("");
     }
