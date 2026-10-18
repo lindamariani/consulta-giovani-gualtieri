@@ -11895,3 +11895,32 @@ body,
 .past-events-section .event-list-card {
   border: 1px solid black;
 }
+/* Video: evita trasformazioni GPU durante la riproduzione e lo scroll. */
+.event-media-card:hover .event-media-video > video {
+  transform: none;
+}
+.event-media-video > video {
+  transition: none;
+}
+
+/* Anteprima leggibile prima del primo fotogramma del video. */
+.event-media-preview-loading {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  text-align: center;
+  color: #fff;
+  background: linear-gradient(135deg, #203dff, #111);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .08em;
+  pointer-events: none;
+}
+/* Evita animazioni GPU costose sulle immagini e sui video molto grandi. */
+.event-media-card:hover > img,
+.event-media-card:hover .event-media-video > video { transform: none; }
+.event-media-card > img,
+.event-media-video > video { transition: none; }

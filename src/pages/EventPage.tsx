@@ -1,5 +1,6 @@
 import {
     ArrowLeft,
+    ExternalLink,
     CalendarDays,
     Clock,
     MapPin,
@@ -437,16 +438,28 @@ function EventPage() {
             {isPast && (
                 <section className="event-gallery-section">
                     <div className="container">
-                        <div className="event-gallery-heading">
-                            <span>
-                                CAMERA ROLL
-                            </span>
+                        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 24, flexWrap: "wrap" }}>
+                            <div className="event-gallery-heading">
+                                <span>
+                                    CAMERA ROLL
+                                </span>
 
-                            <h2>
-                                COM'È
-                                <br />
-                                ANDATA?
-                            </h2>
+                                <h2>
+                                    COM'È
+                                    <br />
+                                    ANDATA?
+                                </h2>
+                            </div>
+
+                            <a
+                                href="https://drive.google.com/drive/folders/11xcOWS4Cgj0Yv5rv9UUAGiZlH1nPVWXo?usp=sharing"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="button button-blue"
+                            >
+                                Scarica foto e video originali
+                                <ExternalLink size={18} />
+                            </a>
                         </div>
 
                         {media.length > 0 ? (
@@ -489,6 +502,7 @@ function EventPage() {
                                 </p>
                             </div>
                         )}
+
                     </div>
                 </section>
             )}
