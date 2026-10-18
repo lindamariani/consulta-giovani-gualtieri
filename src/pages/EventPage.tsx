@@ -18,6 +18,7 @@ import {
 } from "react";
 
 import { supabase } from "../lib/supabase";
+import { AddToCalendarButton } from "add-to-calendar-button-react";
 
 import EventGalleryMedia from "../components/EventGalleryMedia";
 
@@ -417,6 +418,33 @@ function EventPage() {
                                         }
                                     </strong>
                                 </div>
+                            </div>
+                        )}
+
+                        {!isPast && (
+                            <div className="event-calendar-actions">
+                                <span className="event-calendar-label">NON PERDERTI L'EVENTO</span>
+                                <AddToCalendarButton
+                                    name={event.title}
+                                    description={[event.description || event.short_description || "", `Organizzato da ${event.organizer}`, window.location.href].filter(Boolean).join("\n\n")}
+                                    startDate={event.event_date}
+                                    endDate={event.end_time && event.start_time && event.end_time.slice(0, 5) <= event.start_time.slice(0, 5)
+                                        ? (() => { const d = new Date(`${event.event_date}T12:00:00Z`); d.setUTCDate(d.getUTCDate() + 1); return d.toISOString().slice(0, 10); })()
+                                        : event.event_date}
+                                    startTime={event.start_time?.slice(0, 5)}
+                                    endTime={event.end_time?.slice(0, 5)}
+                                    timeZone="Europe/Rome"
+                                    location={event.location || "Gualtieri (RE)"}
+                                    options={["Apple", "Google", "Outlook.com", "Microsoft365", "iCal"]}
+                                    label="Aggiungi al calendario"
+                                    language="it"
+                                    hideBranding={true}
+                                    buttonStyle="flat"
+                                    trigger="click"
+                                    listStyle="dropdown"
+                                    hideBackground={true}
+                                    size="3"
+                                />
                             </div>
                         )}
 

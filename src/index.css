@@ -11924,3 +11924,106 @@ body,
 .event-media-card:hover .event-media-video > video { transform: none; }
 .event-media-card > img,
 .event-media-video > video { transition: none; }
+
+
+/* =========================================================
+   CALENDARIO EVENTI E ANALYTICS OWNER
+========================================================= */
+.event-calendar-actions {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border-right: 1px solid var(--black);
+  border-bottom: 1px solid var(--black);
+  background: #f0f1ff;
+}
+.event-calendar-label {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .12em;
+}
+.event-calendar-button {
+  width: 100%;
+  text-align: center;
+  font-size: 11px;
+  line-height: 1.3;
+}
+.owner-analytics-section {
+  margin-top: 55px;
+  padding: 30px;
+  background: #f0f1ff;
+  border: 1px solid var(--black);
+  box-shadow: 6px 6px 0 var(--black);
+}
+.owner-analytics-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 15px;
+}
+.owner-analytics-heading span {
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: .14em;
+}
+.owner-analytics-heading h2 {
+  margin-top: 8px;
+  font-size: clamp(30px, 4vw, 48px);
+  line-height: 1;
+  font-weight: 800;
+}
+.owner-analytics-section p {
+  max-width: 600px;
+  margin: 22px 0;
+  font-size: 14px;
+  line-height: 1.6;
+}
+.owner-analytics-link { margin-bottom: 14px; }
+.owner-analytics-section small {
+  display: block;
+  font-size: 11px;
+  line-height: 1.5;
+}
+@media (max-width: 600px) {
+  .owner-analytics-section { padding: 20px; }
+  .owner-analytics-link { width: 100%; }
+}
+
+/* Calendario: centratura, aspetto coerente e menu solo al clic */
+.event-calendar-actions {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: #f0f1ff;
+}
+.event-calendar-actions > * { max-width: 100%; }
+.event-calendar-actions .atcb-button-wrapper,
+.event-calendar-actions .atcb-button {
+  font-family: "Funnel Display", sans-serif;
+}
+.event-calendar-actions [class*="atcb"] { max-width: 100%; }
+.event-calendar-actions button { cursor: pointer; }
+.event-calendar-actions .atcb-button-wrapper { margin-inline: auto; }
+.event-calendar-actions .atcb-button { text-transform: uppercase; }
+.event-calendar-actions .atcb-button-text { font-weight: 800; }
+.event-calendar-actions .atcb-list { text-align: left; }
+@media (max-width: 600px) {
+  .event-calendar-actions { padding: 20px 12px; }
+}
+
+/* Pulsante calendario - stile Consulta */
+.event-calendar-actions add-to-calendar-button::part(atcb-button) {
+  background: #203dff !important;
+  color: #ffffff !important;
+  border: 2px solid #111111 !important;
+  border-radius: 0 !important;
+  box-shadow: 4px 4px 0 #111111 !important;
+  font-family: "Funnel Display", sans-serif !important;
+  font-weight: 800 !important;
+  text-transform: uppercase !important;
+}
+
+.event-calendar-actions add-to-calendar-button::part(atcb-button):hover {
+  background: #1930cc !important;
+}

@@ -6,6 +6,8 @@ import {
     LogOut,
     Settings,
     Users,
+    BarChart3,
+    ExternalLink,
 } from "lucide-react";
 
 import {
@@ -322,6 +324,30 @@ function OwnerPage() {
                         </small>
                     </article>
                 </div>
+
+                <section className="owner-analytics-section" aria-labelledby="owner-analytics-title">
+                    <div className="owner-analytics-heading">
+                        <div>
+                            <span>ANDAMENTO DEL SITO</span>
+                            <h2 id="owner-analytics-title">STATISTICHE.</h2>
+                        </div>
+                        <BarChart3 size={36} aria-hidden="true" />
+                    </div>
+                    <p>
+                        Visite, pagine visualizzate e provenienza dei visitatori
+                        sono disponibili nelle statistiche reali di Vercel.
+                    </p>
+                    <a
+                        className="button button-blue owner-analytics-link"
+                        href="https://vercel.com/dashboard"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        Apri Analytics su Vercel
+                        <ExternalLink size={18} />
+                    </a>
+                    <small>Accedi a Vercel e seleziona il progetto della Consulta → Analytics.</small>
+                </section>
 
                 <div className="owner-quick-section">
                     <div>
