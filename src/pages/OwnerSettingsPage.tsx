@@ -1,3 +1,4 @@
+import OwnerLoadingScreen from "../components/OwnerLoadingScreen";
 import { useEffect, useState } from "react";
 import {
   ArrowLeft,
@@ -74,11 +75,7 @@ function OwnerSettingsPage() {
     !saving;
 
   if (loading) {
-    return (
-      <main className="owner-loading">
-        CARICAMENTO IMPOSTAZIONI...
-      </main>
-    );
+    return <OwnerLoadingScreen title="IMPOSTAZIONI." label="Caricamento impostazioni..." />;
   }
 
   return (

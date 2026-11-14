@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { memo, useEffect, useRef, useState } from "react";
 import { Volume2, VolumeX } from "lucide-react";
 import type { EventMediaOrientation, EventMediaRecord } from "../types/event";
 
@@ -41,14 +41,34 @@ function orientationFromRatio(ratio: number | null): EventMediaOrientation {
   return "square";
 }
 
-export default function EventGalleryMedia({ media, index, eventTitle }: Props) {
+function EventGalleryMedia({ media, index, eventTitle }: Props) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
+  const cardRef = useRef<HTMLElement | null>(null);
+  const [loadImage, setLoadImage] = useState(index < 2);
   const [muted, setMuted] = useState(true);
   const [loadVideo, setLoadVideo] = useState(false);
   const [previewReady, setPreviewReady] = useState(false);
   const [orientation, setOrientation] = useState<EventMediaOrientation>(
     media.orientation ?? orientationFromRatio(media.aspect_ratio)
   );
+
+  useEffect(() => {
+    if (media.media_type === "video" || loadImage) return;
+    const image = cardRef.current;
+    if (!image) return;
+    if (typeof IntersectionObserver === "undefined") {
+      setLoadImage(true);
+      return;
+    }
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        setLoadImage(true);
+        observer.disconnect();
+      }
+    }, { rootMargin: "1000px 0px", threshold: 0 });
+    observer.observe(image);
+    return () => observer.disconnect();
+  }, [media.id, media.media_type, loadImage]);
 
   useEffect(() => {
     if (media.media_type !== "video") return;
@@ -104,7 +124,7 @@ export default function EventGalleryMedia({ media, index, eventTitle }: Props) {
   };
 
   return (
-    <article className={`event-media-card event-media-${orientation}`}>
+    <article ref={cardRef} className={`event-media-card event-media-${orientation} ${media.media_type === "image" ? "event-media-photo" : ""}`}>
       {media.media_type === "video" ? (
         <div className="event-media-video" onClick={toggleAudio}>
           <video
@@ -141,9 +161,10 @@ export default function EventGalleryMedia({ media, index, eventTitle }: Props) {
         </div>
       ) : (
         <img
-          src={media.image_url}
+          src={loadImage ? media.image_url : undefined}
+          fetchPriority={index < 2 ? "high" : "auto"}
           alt={media.caption ?? `${eventTitle} ${index + 1}`}
-          loading="lazy"
+          loading={loadImage ? "eager" : "lazy"}
           decoding="async"
           onLoad={(event) => {
             if (media.orientation) return;
@@ -157,3 +178,4 @@ export default function EventGalleryMedia({ media, index, eventTitle }: Props) {
     </article>
   );
 }
+export default memo(EventGalleryMedia);

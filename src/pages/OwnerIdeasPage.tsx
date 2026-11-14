@@ -1,3 +1,5 @@
+import OwnerLoadingScreen from "../components/OwnerLoadingScreen";
+import { useOwnerConfirm } from "../components/OwnerConfirmDialog";
 import {
   ArrowLeft,
   Check,
@@ -58,6 +60,7 @@ type Idea = {
 function OwnerIdeasPage() {
   const navigate =
     useNavigate();
+  const { confirm, dialog } = useOwnerConfirm();
 
   const [
     ideas,
@@ -277,10 +280,11 @@ function OwnerIdeasPage() {
     async (
       idea: Idea
     ) => {
-      const confirmed =
-        window.confirm(
-          "Vuoi eliminare definitivamente questa idea?"
-        );
+      const confirmed = await confirm({
+        title: "ELIMINARE L'IDEA?",
+        message: "Questa proposta verrà eliminata definitivamente. Questa operazione non può essere annullata.",
+        confirmLabel: "SÌ, ELIMINA",
+      });
 
       if (!confirmed) {
         return;
@@ -325,11 +329,7 @@ function OwnerIdeasPage() {
     };
 
   if (loading) {
-    return (
-      <main className="owner-loading">
-        CARICAMENTO IDEE...
-      </main>
-    );
+    return <OwnerLoadingScreen title="IDEE." label="Caricamento idee..." />;
   }
 
   return (
@@ -669,6 +669,7 @@ function OwnerIdeasPage() {
         )}
 
       </div>
+    {dialog}
     </main>
   );
 }

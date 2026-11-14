@@ -1,3 +1,4 @@
+import OwnerLoadingScreen from "../components/OwnerLoadingScreen";
 import {
   ArrowLeft,
   Check,
@@ -542,9 +543,10 @@ function OwnerEventFormPage() {
 
   if (loading) {
     return (
-      <main className="owner-loading">
-        CARICAMENTO...
-      </main>
+      <OwnerLoadingScreen
+        title="MODIFICA EVENTO."
+        label="Caricamento dati dell’evento..."
+      />
     );
   }
 

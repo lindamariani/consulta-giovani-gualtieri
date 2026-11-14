@@ -1,3 +1,5 @@
+import OwnerLoadingScreen from "../components/OwnerLoadingScreen";
+import { useOwnerConfirm } from "../components/OwnerConfirmDialog";
 import { useEffect, useMemo, useState } from "react";
 import {
   ArrowLeft,
@@ -16,6 +18,7 @@ import type { EventRecord } from "../types/event";
 
 function OwnerEventsPage() {
   const navigate = useNavigate();
+  const { confirm, dialog } = useOwnerConfirm();
 
   const [events, setEvents] = useState<EventRecord[]>([]);
 
@@ -114,10 +117,11 @@ function OwnerEventsPage() {
   const handleDelete = async (
     event: EventRecord
   ) => {
-    const confirmed =
-      window.confirm(
-        `Vuoi davvero eliminare "${event.title}"?`
-      );
+    const confirmed = await confirm({
+      title: "ELIMINARE L'EVENTO?",
+      message: `«${event.title}» verrà eliminato definitivamente. Questa operazione non può essere annullata.`,
+      confirmLabel: "SÌ, ELIMINA",
+    });
 
     if (!confirmed) return;
 
@@ -127,9 +131,7 @@ function OwnerEventsPage() {
       .eq("id", event.id);
 
     if (error) {
-      alert(
-        "Errore durante l'eliminazione."
-      );
+      setError("Errore durante l'eliminazione.");
 
       console.error(error);
 
@@ -158,9 +160,7 @@ function OwnerEventsPage() {
       .eq("id", event.id);
 
     if (error) {
-      alert(
-        "Errore durante la modifica."
-      );
+      setError("Errore durante la modifica.");
 
       console.error(error);
 
@@ -286,11 +286,7 @@ function OwnerEventsPage() {
   );
 
   if (loading) {
-    return (
-      <main className="owner-loading">
-        CARICAMENTO EVENTI...
-      </main>
-    );
+    return <OwnerLoadingScreen title="EVENTI." label="Caricamento eventi..." />;
   }
 
   return (
@@ -428,6 +424,7 @@ function OwnerEventsPage() {
           </div>
         </section>
       </div>
+    {dialog}
     </main>
   );
 }

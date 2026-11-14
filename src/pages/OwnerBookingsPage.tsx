@@ -1,3 +1,5 @@
+import OwnerLoadingScreen from "../components/OwnerLoadingScreen";
+import { useOwnerConfirm } from "../components/OwnerConfirmDialog";
 import {
     ArrowLeft,
     Ban,
@@ -71,6 +73,7 @@ function formatDate(
 function OwnerBookingsPage() {
     const navigate =
         useNavigate();
+    const { confirm, dialog } = useOwnerConfirm();
 
     const [courts, setCourts] =
         useState<Court[]>([]);
@@ -355,10 +358,11 @@ function OwnerBookingsPage() {
         async (
             bookingId: string
         ) => {
-            const confirmed =
-                window.confirm(
-                    "Vuoi eliminare questa prenotazione?"
-                );
+            const confirmed = await confirm({
+                title: "ELIMINARE LA PRENOTAZIONE?",
+                message: "La prenotazione verrà cancellata definitivamente. Questa operazione non può essere annullata.",
+                confirmLabel: "SÌ, ELIMINA",
+            });
 
             if (!confirmed) {
                 return;
@@ -408,10 +412,12 @@ function OwnerBookingsPage() {
         async (
             blockId: string
         ) => {
-            const confirmed =
-                window.confirm(
-                    "Vuoi riaprire questa fascia oraria?"
-                );
+            const confirmed = await confirm({
+                title: "RIAPRIRE LA FASCIA?",
+                message: "Il blocco sarà rimosso e questa fascia oraria tornerà disponibile per le prenotazioni.",
+                confirmLabel: "SÌ, RIAPRI",
+                variant: "primary",
+            });
 
             if (!confirmed) {
                 return;
@@ -458,12 +464,8 @@ function OwnerBookingsPage() {
         };
 
     if (loading) {
-        return (
-            <main className="owner-loading">
-                CARICAMENTO PRENOTAZIONI...
-            </main>
-        );
-    }
+    return <OwnerLoadingScreen title="PRENOTAZIONI." label="Caricamento prenotazioni..." />;
+  }
 
     return (
         <main className="owner-bookings-page">
@@ -904,7 +906,8 @@ function OwnerBookingsPage() {
                 </section>
 
             </div>
-        </main>
+        {dialog}
+    </main>
     );
 }
 

@@ -1,3 +1,4 @@
+import OwnerLoadingScreen from "../components/OwnerLoadingScreen";
 import {
   ArrowLeft,
   Ban,
@@ -279,11 +280,7 @@ function OwnerCourtBlockPage() {
     );
 
   if (loading) {
-    return (
-      <main className="owner-loading">
-        CARICAMENTO CAMPI...
-      </main>
-    );
+    return <OwnerLoadingScreen title="CAMPI." label="Caricamento campi..." />;
   }
 
   return (

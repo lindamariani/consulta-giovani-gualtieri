@@ -998,7 +998,7 @@ img {
 }
 
 .graphic-sticker {
-  position: absolute;
+position: absolute;
 
   right: 15px;
   bottom: 15px;
@@ -1998,7 +1998,7 @@ img {
   }
 
   .hero-marquee {
-    height: 42px;
+height: 42px;
   }
 
   .hero-marquee-track {
@@ -2998,8 +2998,7 @@ img {
   background: var(--blue);
 
   border: 1px solid white;
-
-  color: rgba(255, 255, 255, 0.7);
+color: rgba(255, 255, 255, 0.7);
 
   font-size: 10px;
   font-weight: 800;
@@ -3998,7 +3997,6 @@ img {
 
   text-align: center;
 }
-
 /* SUCCESS */
 
 .booking-success-page {
@@ -4997,8 +4995,7 @@ img {
   grid-template-columns: 1fr 1fr;
 
   gap: 10px;
-
-  margin-top: 22px;
+margin-top: 22px;
 }
 
 .idea-contact-fields label {
@@ -5998,7 +5995,6 @@ img {
 
   font-size: 26px;
 }
-
 .process-step p {
   margin-top: 10px;
 
@@ -6998,8 +6994,7 @@ img {
 
 .owner-event-labels span {
   padding: 5px 7px;
-
-  background: white;
+background: white;
   color: black;
 
   border: 1px solid black;
@@ -7998,7 +7993,7 @@ img {
 }
 
 @media (max-width: 700px) {
-  .event-cover-section {
+.event-cover-section {
     padding: 50px 0 70px;
   }
 
@@ -9998,8 +9993,7 @@ div {
   height: 170px;
 
   padding: 20px;
-
-  display: flex;
+display: flex;
   flex-direction: column;
   justify-content: space-between;
 
@@ -10998,7 +10992,7 @@ body,
   }
 
   .owner-save-event {
-    box-shadow: 0 5px 0 var(--blue);
+box-shadow: 0 5px 0 var(--blue);
   }
 
   /* -------------------------------------------------------
@@ -12026,4 +12020,194 @@ body,
 
 .event-calendar-actions add-to-calendar-button::part(atcb-button):hover {
   background: #1930cc !important;
+}
+
+/* =========================================================
+   FIX MOBILE NOVEMBRE 2026
+   Non cambiare il layout desktop.
+========================================================= */
+@media (max-width: 700px) {
+  /* Il padding mobile generico di .board-cell non deve colpire la foto. */
+  .consulta-board .board-photo {
+    padding: 0;
+  }
+  .consulta-board .board-photo .image-placeholder {
+    min-height: 0;
+    height: 100%;
+    width: 100%;
+  }
+  /* La griglia Idee ha bordi condivisi: il gap separava i riquadri. */
+  .idea-category-grid {
+    gap: 0;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .idea-category {
+    min-width: 0;
+  }
+  /* Evita di disegnare le foto fuori dallo schermo durante lo scroll. */
+  .event-media-photo {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 440px;
+  }
+}
+
+/* Usata per il messaggio di evento non trovato nella gestione media. */
+.owner-loading-view {
+  min-height: 100svh;
+  background: #f2f2ef;
+  color: #111;
+  padding: 45px 0 90px;
+}
+
+/* =========================================================
+   OWNER — FINESTRE DI CONFERMA PERSONALIZZATE
+   ========================================================= */
+.owner-confirm-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(17, 17, 17, 0.68);
+  padding: 22px;
+  animation: owner-confirm-backdrop-in 150ms ease-out;
+}
+
+.owner-confirm-dialog {
+  width: min(100%, 510px);
+  max-height: calc(100dvh - 44px);
+  overflow-y: auto;
+  background: var(--white, #fff);
+  color: var(--black, #111);
+  border: 2px solid var(--black, #111);
+  box-shadow: 8px 8px 0 var(--black, #111);
+  padding: clamp(22px, 5vw, 34px);
+  animation: owner-confirm-dialog-in 160ms ease-out;
+}
+
+.owner-confirm-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 22px;
+}
+
+.owner-confirm-topbar span {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+}
+
+.owner-confirm-close {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  background: transparent;
+  color: inherit;
+  border: 1.5px solid currentColor;
+}
+
+.owner-confirm-symbol {
+  width: 62px;
+  height: 62px;
+  display: grid;
+  place-items: center;
+  border: 2px solid var(--black, #111);
+  margin-bottom: 24px;
+}
+
+.owner-confirm-symbol-danger {
+  background: var(--pink, #ff4eb8);
+}
+
+.owner-confirm-symbol-primary {
+  background: var(--blue, #203dff);
+  color: var(--white, #fff);
+}
+
+.owner-confirm-dialog h2 {
+  margin: 0 0 14px;
+  font-size: clamp(29px, 7vw, 42px);
+  line-height: 1.02;
+  letter-spacing: -0.04em;
+  font-weight: 800;
+  overflow-wrap: anywhere;
+}
+
+.owner-confirm-dialog p {
+  margin: 0 0 30px;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #454545;
+  overflow-wrap: anywhere;
+}
+
+.owner-confirm-actions {
+  display: grid;
+  grid-template-columns: 1fr 1.3fr;
+  gap: 12px;
+}
+
+.owner-confirm-actions button {
+  min-height: 54px;
+  padding: 12px;
+  border: 2px solid var(--black, #111);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.015em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: transform 120ms ease, box-shadow 120ms ease;
+}
+
+.owner-confirm-cancel {
+  background: var(--white, #fff);
+  color: var(--black, #111);
+}
+
+.owner-confirm-accept-danger {
+  background: var(--pink, #ff4eb8);
+  color: var(--black, #111);
+}
+
+.owner-confirm-accept-primary {
+  background: var(--blue, #203dff);
+  color: var(--white, #fff);
+}
+
+.owner-confirm-actions button:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 3px 3px 0 var(--black, #111);
+}
+
+.owner-confirm-actions button:focus-visible,
+.owner-confirm-close:focus-visible {
+  outline: 3px solid var(--blue, #203dff);
+  outline-offset: 4px;
+}
+
+@keyframes owner-confirm-backdrop-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes owner-confirm-dialog-in {
+  from { opacity: 0; transform: translateY(10px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@media (max-width: 480px) {
+  .owner-confirm-dialog { padding: 22px; box-shadow: 5px 5px 0 var(--black, #111); }
+  .owner-confirm-actions { grid-template-columns: 1fr; }
+  .owner-confirm-accept { order: -1; }
+  .owner-confirm-actions button { width: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .owner-confirm-backdrop, .owner-confirm-dialog { animation: none; }
+  .owner-confirm-actions button { transition: none; }
 }

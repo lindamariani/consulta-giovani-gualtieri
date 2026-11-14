@@ -1,3 +1,4 @@
+import OwnerLoadingScreen from "../components/OwnerLoadingScreen";
 import {
     CalendarDays,
     CalendarPlus,
@@ -6,8 +7,6 @@ import {
     LogOut,
     Settings,
     Users,
-    BarChart3,
-    ExternalLink,
 } from "lucide-react";
 
 import {
@@ -90,50 +89,21 @@ function OwnerPage() {
                     .toISOString()
                     .split("T")[0];
 
-                const {
-                    count:
-                    futureEventCount,
-                } = await supabase
-                    .from("events")
-                    .select("*", {
-                        count: "exact",
-                        head: true,
-                    })
-                    .gte(
-                        "event_date",
-                        today
-                    );
-
-                const {
-                    count:
-                    bookingCount,
-                } = await supabase
-                    .from("bookings")
-                    .select("*", {
-                        count: "exact",
-                        head: true,
-                    })
-                    .eq(
-                        "status",
-                        "confirmed"
-                    )
-                    .gte(
-                        "booking_date",
-                        today
-                    );
-
-                const {
-                    count: ideaCount,
-                } = await supabase
-                    .from("ideas")
-                    .select("*", {
-                        count: "exact",
-                        head: true,
-                    })
-                    .eq(
-                        "status",
-                        "new"
-                    );
+                const [eventsResult, bookingsResult, ideasResult] = await Promise.all([
+                    supabase.from("events")
+                        .select("*", { count: "exact", head: true })
+                        .gte("event_date", today),
+                    supabase.from("bookings")
+                        .select("*", { count: "exact", head: true })
+                        .eq("status", "confirmed")
+                        .gte("booking_date", today),
+                    supabase.from("ideas")
+                        .select("*", { count: "exact", head: true })
+                        .eq("status", "new"),
+                ]);
+                const futureEventCount = eventsResult.count;
+                const bookingCount = bookingsResult.count;
+                const ideaCount = ideasResult.count;
 
                 setFutureEvents(
                     futureEventCount ?? 0
@@ -161,12 +131,8 @@ function OwnerPage() {
         };
 
     if (loading) {
-        return (
-            <main className="owner-loading">
-                CARICAMENTO...
-            </main>
-        );
-    }
+    return <OwnerLoadingScreen title="DASHBOARD." label="Caricamento riepilogo..." />;
+  }
 
     return (
         <main className="owner-page">
@@ -324,30 +290,6 @@ function OwnerPage() {
                         </small>
                     </article>
                 </div>
-
-                <section className="owner-analytics-section" aria-labelledby="owner-analytics-title">
-                    <div className="owner-analytics-heading">
-                        <div>
-                            <span>ANDAMENTO DEL SITO</span>
-                            <h2 id="owner-analytics-title">STATISTICHE.</h2>
-                        </div>
-                        <BarChart3 size={36} aria-hidden="true" />
-                    </div>
-                    <p>
-                        Visite, pagine visualizzate e provenienza dei visitatori
-                        sono disponibili nelle statistiche reali di Vercel.
-                    </p>
-                    <a
-                        className="button button-blue owner-analytics-link"
-                        href="https://vercel.com/dashboard"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        Apri Analytics su Vercel
-                        <ExternalLink size={18} />
-                    </a>
-                    <small>Accedi a Vercel e seleziona il progetto della Consulta → Analytics.</small>
-                </section>
 
                 <div className="owner-quick-section">
                     <div>

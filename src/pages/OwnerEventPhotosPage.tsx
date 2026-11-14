@@ -1,3 +1,5 @@
+import OwnerLoadingScreen from "../components/OwnerLoadingScreen";
+import { useOwnerConfirm } from "../components/OwnerConfirmDialog";
 import {
   ArrowLeft,
   Film,
@@ -457,6 +459,7 @@ function OwnerEventPhotosPage() {
 
   const navigate =
     useNavigate();
+  const { confirm, dialog } = useOwnerConfirm();
 
   const [
     event,
@@ -961,10 +964,11 @@ function OwnerEventPhotosPage() {
           ? "video"
           : "foto";
 
-      const confirmed =
-        window.confirm(
-          `Vuoi eliminare questo ${label}?`
-        );
+      const confirmed = await confirm({
+        title: item.media_type === "video" ? "ELIMINARE IL VIDEO?" : "ELIMINARE LA FOTO?",
+        message: `Questo ${label} verrà rimosso definitivamente dalla galleria dell'evento.`,
+        confirmLabel: "SÌ, ELIMINA",
+      });
 
       if (!confirmed) {
         return;
@@ -997,8 +1001,7 @@ function OwnerEventPhotosPage() {
         console.error(
           databaseError
         );
-
-        setError(
+setError(
           "Errore durante l'eliminazione del media."
         );
 
@@ -1042,18 +1045,12 @@ function OwnerEventPhotosPage() {
     };
 
   if (loading) {
-    return (
-      <main className="owner-loading">
-        CARICAMENTO MEDIA...
-      </main>
-    );
+    return <OwnerLoadingScreen title="MEDIA EVENTO." label="Caricamento media..." />;
   }
 
   if (!event) {
     return (
-      <main className="owner-loading">
-        EVENTO NON TROVATO
-      </main>
+      <main className="owner-loading-view"><div className="container"><p>Evento non trovato.</p></div></main>
     );
   }
 
@@ -1368,6 +1365,7 @@ function OwnerEventPhotosPage() {
           )}
         </section>
       </div>
+    {dialog}
     </main>
   );
 }

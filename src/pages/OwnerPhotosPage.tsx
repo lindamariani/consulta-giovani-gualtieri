@@ -1,3 +1,4 @@
+import OwnerLoadingScreen from "../components/OwnerLoadingScreen";
 import {
   ArrowLeft,
   Film,
@@ -119,26 +120,15 @@ function OwnerPhotosPage() {
           return;
         }
 
-        const {
-          data:
-            eventData,
-          error:
-            eventError,
-        } =
-          await supabase
-            .from(
-              "events"
-            )
-            .select(
-              "id, title, event_date, cover_url"
-            )
-            .order(
-              "event_date",
-              {
-                ascending:
-                  false,
-              }
-            );
+        const [eventsResponse, mediaResponse] = await Promise.all([
+          supabase.from("events")
+            .select("id, title, event_date, cover_url")
+            .order("event_date", { ascending: false }),
+          supabase.from("event_photos")
+            .select("event_id, media_type"),
+        ]);
+        const { data: eventData, error: eventError } = eventsResponse;
+        const { data: mediaData, error: mediaError } = mediaResponse;
 
         if (eventError) {
           console.error(
@@ -155,20 +145,6 @@ function OwnerPhotosPage() {
 
           return;
         }
-
-        const {
-          data:
-            mediaData,
-          error:
-            mediaError,
-        } =
-          await supabase
-            .from(
-              "event_photos"
-            )
-            .select(
-              "event_id, media_type"
-            );
 
         if (mediaError) {
           console.error(
@@ -254,11 +230,7 @@ function OwnerPhotosPage() {
   }, [navigate]);
 
   if (loading) {
-    return (
-      <main className="owner-loading">
-        CARICAMENTO MEDIA...
-      </main>
-    );
+    return <OwnerLoadingScreen title="MEDIA." label="Caricamento media..." />;
   }
 
   const totalMedia =
