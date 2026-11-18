@@ -1072,7 +1072,7 @@ function BookingPage() {
               </small>
 
               <h2>
-                COSA GIOCHIAMO?
+                A COSA GIOCHIAMO?
               </h2>
             </div>
           </div>

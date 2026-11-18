@@ -203,10 +203,8 @@ function IdeasPage() {
               <Sparkles size={30} />
 
               <p>
-                Dicci cosa ti piacerebbe vedere a
-                Gualtieri. Un evento, un torneo, una
-                serata, un'attività o qualsiasi altra
-                cosa.
+                Hai un’idea o un suggerimento? 
+                Condividilo con noi e inviaci la tua proposta
               </p>
 
               <strong>
@@ -560,9 +558,8 @@ function IdeasPage() {
                   </strong>
 
                   <p>
-                    La Consulta potrà mostrarla sul sito
-                    in forma anonima, anche se hai scelto
-                    di lasciare i tuoi contatti.
+                    La Consulta potrà condividere la tua idea sui propri canali social o sul sito web. 
+                    Non verranno condivisi dati personali.
                   </p>
                 </div>
               </button>

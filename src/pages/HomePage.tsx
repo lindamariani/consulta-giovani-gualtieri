@@ -60,14 +60,11 @@ function HomePage() {
 
                     <div className="hero-collage">
                         <div className="hero-photo-block hero-photo-large">
-                            <div className="image-placeholder image-placeholder-photo">
-                                <span>Foto Consulta</span>
-                            </div>
-
-                            <div className="hero-photo-label">
-                                
-                                <strong>NOI</strong>
-                            </div>
+                            <img
+                                src="public/foto_gruppo.jpg"
+                                alt="Foto di gruppo della Consulta Giovani Gualtieri"
+                                className="hero-photo-img"
+                            />
                         </div>
 
                         <div className="hero-mini-card hero-mini-pink">
@@ -83,7 +80,7 @@ function HomePage() {
                         </div>
 
                         <div className="hero-star">
-                            
+
                         </div>
                     </div>
                 </div>
@@ -173,9 +170,16 @@ function HomePage() {
 
                     <div className="consulta-board">
                         <div className="board-cell board-photo">
-                            <div className="image-placeholder">
-                                <span>Foto di gruppo</span>
-                            </div>
+                            <img
+                                src="public/foto_torre.jpeg"
+                                alt="Foto di gruppo della Consulta Giovani Gualtieri"
+                                style={{
+                                    width: "100%",
+                                    height: "100%",
+                                    objectFit: "cover",
+                                    display: "block",
+                                }}
+                            />
                         </div>
 
                         <div className="board-cell board-blue">

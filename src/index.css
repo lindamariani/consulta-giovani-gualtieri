@@ -9677,19 +9677,15 @@ background: white;
   margin-top: 30px;
 
   display: grid;
-  grid-template-columns:
-    repeat(
-      2,
-      minmax(
-        0,
-        1fr
-      )
-    );
-
-  gap: 18px;
+  /* Una proposta per riga: l'altezza segue sempre il testo. */
+  grid-template-columns: minmax(0, 1fr);
+  gap: 22px;
 }
 
 .owner-idea-card {
+  width: 100%;
+  min-width: 0;
+  height: auto;
   padding: 25px;
 
   display: flex;
@@ -9757,29 +9753,27 @@ background: white;
 
 .owner-idea-text {
   margin: 35px 0;
+  min-width: 0;
+  max-width: 100%;
 
   font-family:
     "Funnel Display",
     sans-serif;
 
-  font-size: clamp(
-    21px,
-    2.5vw,
-    31px
-  );
-
-  line-height: 1.05;
+  font-size: clamp(21px, 2.5vw, 31px);
+  line-height: 1.13;
+  /* Conserva le righe inserite dall'utente; spezza anche URL/parole senza spazi. */
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  word-break: normal;
 }
 
 .owner-idea-info {
   margin-top: auto;
+  min-width: 0;
 
   display: grid;
-  grid-template-columns:
-    repeat(
-      2,
-      1fr
-    );
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 
   border-top:
     1px solid black;
@@ -10622,8 +10616,10 @@ body,
 .owner-ideas-container,
 .owner-photos-container,
 .owner-settings-container {
-  width: min(100%, 1180px);
+  /* Il 100% senza gutter faceva toccare i bordi ai contenuti su iPad. */
+  width: min(1180px, calc(100% - 64px));
   max-width: 100%;
+  margin-inline: auto;
 }
 
 .owner-events-toolbar,
@@ -12060,6 +12056,147 @@ box-shadow: 0 5px 0 var(--blue);
 }
 
 /* =========================================================
+   OWNER RESPONSIVE TABLET + TESTI IDEE
+   Correzioni circoscritte all'area Owner: nessun cambio alla home.
+========================================================= */
+.owner-idea-top,
+.owner-idea-contact,
+.owner-idea-info > div,
+.owner-idea-actions,
+.owner-idea-badges {
+  min-width: 0;
+}
+
+.owner-idea-contact span,
+.owner-idea-info strong,
+.owner-idea-badges span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.owner-idea-actions {
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+
+.owner-idea-actions button {
+  min-width: 0;
+}
+
+/* Tipografia interpolata fino a 1280px: non salta di dimensione ruotando l'iPad. */
+@media (min-width: 701px) and (max-width: 1280px) {
+  .owner-events-heading h1,
+  .owner-event-form-heading h1,
+  .owner-bookings-heading h1,
+  .owner-court-block-heading h1,
+  .owner-photo-heading h1 {
+    font-size: clamp(50px, calc(16vw - 90px), 115px);
+    line-height: 0.9;
+    letter-spacing: -0.055em;
+  }
+
+  .owner-ideas-heading h1,
+  .owner-settings-heading h1 {
+    font-size: clamp(50px, calc(12.6vw - 59px), 103px);
+    line-height: 0.9;
+  }
+
+  .owner-photos-heading h1 {
+    font-size: clamp(50px, calc(20.5vw - 134px), 129px);
+    line-height: 0.9;
+  }
+}
+
+@media (min-width: 701px) and (max-width: 1100px) {
+  /* A queste larghezze le vecchie misure desktop soffocavano le colonne. */
+  .owner-events-heading,
+  .owner-bookings-heading,
+  .owner-court-block-heading,
+  .owner-photo-heading,
+  .owner-settings-heading {
+    gap: clamp(20px, 3vw, 35px);
+  }
+
+  .owner-events-heading,
+  .owner-bookings-heading,
+  .owner-court-block-heading,
+  .owner-photo-heading,
+  .owner-settings-heading {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .owner-ideas-heading,
+  .owner-photos-heading {
+    gap: 25px;
+  }
+
+  .owner-events-heading,
+  .owner-bookings-heading,
+  .owner-court-block-heading,
+  .owner-photo-heading,
+  .owner-ideas-heading,
+  .owner-photos-heading,
+  .owner-settings-heading,
+  .owner-event-form-heading {
+    min-width: 0;
+  }
+
+  /* La scheda sicurezza necessita più spazio della card email. */
+  .owner-settings-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (min-width: 701px) and (max-width: 900px) {
+  /* I titoli e i contatori non devono scontrarsi sui tablet verticali. */
+  .owner-events-heading,
+  .owner-bookings-heading,
+  .owner-court-block-heading,
+  .owner-photo-heading,
+  .owner-settings-heading {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .owner-ideas-heading,
+  .owner-photos-heading {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .owner-ideas-counter,
+  .owner-photos-counter,
+  .owner-settings-badge,
+  .owner-block-court,
+  .owner-photo-count,
+  .owner-court-block-icon,
+  .owner-new-event {
+    justify-self: start;
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 700px) {
+  .owner-ideas-list {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .owner-idea-card {
+    padding: clamp(16px, 5vw, 24px);
+  }
+
+  .owner-idea-top {
+    flex-wrap: wrap;
+  }
+
+  .owner-idea-text {
+    margin: 24px 0;
+  }
+
+  .owner-idea-actions {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+}
+
+/* =========================================================
    OWNER — FINESTRE DI CONFERMA PERSONALIZZATE
    ========================================================= */
 .owner-confirm-backdrop {
@@ -12210,4 +12347,139 @@ box-shadow: 0 5px 0 var(--blue);
 @media (prefers-reduced-motion: reduce) {
   .owner-confirm-backdrop, .owner-confirm-dialog { animation: none; }
   .owner-confirm-actions button { transition: none; }
+}
+
+/* =========================================================
+   HOMEPAGE — FOTO CONSULTA SENZA RITAGLIO
+   La foto entra nel flusso del collage e determina l'altezza,
+   senza mai essere tagliata in base alla dimensione dello schermo.
+========================================================= */
+.hero-collage {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  min-height: 0;
+  padding-block: 64px 68px;
+}
+
+.hero-collage .hero-photo-large {
+  position: relative;
+  width: 85%;
+  height: auto;
+  inset: auto;
+  flex: 0 0 auto;
+}
+
+.hero-collage .hero-photo-large > img.hero-photo-img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+  object-position: center;
+}
+
+@media (max-width: 700px) {
+  .hero-collage {
+    padding-block: 60px 75px;
+  }
+  .hero-collage .hero-photo-large {
+    width: 80%;
+  }
+}
+
+
+/* =========================================================
+   HERO — SPOSTAMENTO CARD ROSA, SENZA COPRIRE I VOLTI
+   Desktop e schermi piccoli corretti, iPad (901–1100px) invariato.
+   Le dimensioni della fotografia non vengono modificate.
+========================================================= */
+@media (min-width: 1101px) {
+  .hero-collage .hero-mini-pink {
+    left: -24px;
+    top: 7%;
+  }
+}
+
+/* Telefono in orizzontale / schermi compatti */
+@media (min-width: 701px) and (max-width: 900px) {
+  .hero-collage .hero-mini-pink {
+    left: -18px;
+    top: 10%;
+    width: clamp(135px, 18vw, 150px);
+    padding: 14px;
+  }
+
+  .hero-collage .hero-mini-pink strong {
+    font-size: 32px;
+  }
+}
+
+/* Smartphone in verticale */
+@media (max-width: 700px) {
+  .hero-collage .hero-mini-pink {
+    left: -7px;
+    top: 5%;
+    width: 112px;
+    padding: 10px;
+  }
+
+  .hero-collage .hero-mini-pink strong {
+    font-size: 24px;
+  }
+
+  .hero-collage .hero-mini-pink small {
+    font-size: 10px;
+  }
+}
+
+
+/* =========================================================
+   HERO DESKTOP — CARD ROSA FUORI DAI VOLTI
+   Applicato solo al desktop; tablet e telefoni invariati.
+========================================================= */
+@media (min-width: 1101px) {
+  .hero-collage .hero-mini-pink {
+    left: -24px;
+    top: 3%;
+    width: 150px;
+    padding: 14px;
+  }
+
+  .hero-collage .hero-mini-pink strong {
+    font-size: 32px;
+  }
+}
+
+
+/* =========================================================
+   PAGINA CHI SIAMO — FOTO CONSULTA A PROPORZIONI ORIGINALI
+   Applicato esclusivamente a /consulta.
+   Non modifica il collage o le card della homepage.
+========================================================= */
+.consulta-page .consulta-intro-photo {
+  height: auto;
+  min-height: 0;
+}
+
+/* Anche se ConsultaPage.tsx contiene ancora height: "100%" inline,
+   l'immagine torna alla sua altezza naturale in base alla larghezza. */
+.consulta-page .consulta-intro-photo > img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto !important;
+  object-fit: contain;
+  object-position: center;
+}
+
+/* Su schermi stretti la decorazione resta sul bordo inferiore e
+   non copre i volti della foto, ora meno alta del vecchio box. */
+@media (max-width: 700px) {
+  .consulta-page .consulta-photo-sticker {
+    right: -8px;
+    bottom: -42px;
+    width: 88px;
+    height: 88px;
+  }
 }

@@ -3,11 +3,11 @@ import {
   ArrowRight,
   CalendarDays,
   Handshake,
+  Landmark,
   Lightbulb,
   Sparkles,
   Trophy,
   Users,
-  Volleyball,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 
@@ -42,8 +42,8 @@ function ConsultaPage() {
               <Sparkles size={30} />
 
               <p>
-                Un gruppo di giovani che prova a creare occasioni, eventi e
-                attività per rendere Gualtieri un posto un po' più vivo.
+                Un gruppo di giovani che "a s'dà da fèr" per gli altri
+                ragazzi e ragazze di Gualtieri.
               </p>
             </div>
           </div>
@@ -70,16 +70,22 @@ function ConsultaPage() {
             </p>
 
             <p>
-              Aperitivi, tornei, attività sportive, serate e nuove proposte:
-              l'obiettivo è creare occasioni per stare insieme e dare spazio a
-              idee che possano interessare davvero ai giovani di Gualtieri.
+              Aperitivi, tornei sportivi, eventi culturali, serate e tanti
+              nuovi progetti pensati per coinvolgere e divertire.
             </p>
           </div>
 
           <div className="consulta-intro-photo">
-            <div className="image-placeholder">
-              <span>Foto Consulta</span>
-            </div>
+            <img
+              src="public/foto_gruppo.jpg"
+              alt="Foto di gruppo della Consulta Giovani Gualtieri"
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "contain",
+                display: "block",
+              }}
+            />
 
             <div className="consulta-photo-sticker">
               <span>GUALTIERI</span>
@@ -119,7 +125,7 @@ function ConsultaPage() {
 
               <span>02</span>
 
-              <h3>TORNEI</h3>
+              <h3>EVENTI SPORTIVI</h3>
 
               <p>
                 Sport, competizione e giornate organizzate sui campi.
@@ -127,14 +133,14 @@ function ConsultaPage() {
             </article>
 
             <article className="consulta-activity consulta-activity-yellow">
-              <Volleyball size={34} />
+              <Landmark size={34} />
 
               <span>03</span>
 
-              <h3>SPORT</h3>
+              <h3>CULTURA</h3>
 
               <p>
-                Beach volley, tennis e attività sportive aperte al territorio.
+                Eventi culturali, mostre, spettacoli e attività per scoprire e condividere la cultura del territorio.
               </p>
             </article>
 
@@ -185,20 +191,25 @@ function ConsultaPage() {
               </p>
             </div>
 
+
             <div className="territory-mini-card">
-              <span>AMICI BAR PARIGI</span>
+              <span>LE NOSTRE COLLABORAZIONI</span>
 
               <strong>
-                FESTA DEL PESCE
+                INSIEME
                 <br />
-                FESTA DEL POZZO
+                FACCIAMO DI PIÙ.
               </strong>
 
-              <p>
-                Due appuntamenti storici di Gualtieri a cui la Consulta può
-                dare supporto operativo e volontario.
-              </p>
+              <div className="territory-collaborators">
+                <div>Amici Bar Parigi</div>
+                <div>Alterales</div>
+                <div>Polisportiva Aironi</div>
+                <div>Polisportiva Gualtierese</div>
+                <div>Teatro Sociale di Gualtieri</div>
+              </div>
             </div>
+
           </div>
         </div>
       </section>
@@ -233,7 +244,7 @@ function ConsultaPage() {
             <div className="process-step">
               <span>02</span>
 
-              <strong>SI ORGANIZZA</strong>
+              <strong>SI DISCUTE</strong>
 
               <p>
                 Si capisce cosa serve, come farlo e chi può dare una mano.
