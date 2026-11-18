@@ -61,7 +61,7 @@ function HomePage() {
                     <div className="hero-collage">
                         <div className="hero-photo-block hero-photo-large">
                             <img
-                                src="public/foto_gruppo.JPG"
+                                src="/foto_gruppo.JPG"
                                 alt="Foto di gruppo della Consulta Giovani Gualtieri"
                                 className="hero-photo-img"
                             />
@@ -171,7 +171,7 @@ function HomePage() {
                     <div className="consulta-board">
                         <div className="board-cell board-photo">
                             <img
-                                src="public/foto_torre.jpeg"
+                                src="/foto_torre.jpeg"
                                 alt="Foto di gruppo della Consulta Giovani Gualtieri"
                                 style={{
                                     width: "100%",

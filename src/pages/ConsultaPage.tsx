@@ -77,7 +77,7 @@ function ConsultaPage() {
 
           <div className="consulta-intro-photo">
             <img
-              src="public/foto_gruppo.JPG"
+              src="/foto_gruppo.JPG"
               alt="Foto di gruppo della Consulta Giovani Gualtieri"
               style={{
                 width: "100%",
